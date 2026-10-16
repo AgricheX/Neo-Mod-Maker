@@ -12,7 +12,7 @@ A WorldBox mod creator for NML (Neo Mod Loader) that runs entirely in your brows
 
 ## How to use
 
-1. Open the site: https://YOUR-USER.github.io/YOUR-REPO
+1. Open the site: https://YOUR-USER.github.io/YOUR-REPO](https://agrichex.github.io/Neo-Mod-Maker/
 2. Build your mod
 3. Export the .zip and place the mod folder in your WorldBox `Mods` folder (NML required)
 
