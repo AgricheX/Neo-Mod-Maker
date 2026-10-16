@@ -1,0 +1,33 @@
+:root[data-theme="one-piece"] {
+  --bg-0: #061a3a;
+  --bg-1: #10408a;
+  --panel: rgba(8, 35, 78, 0.88);
+  --panel-2: rgba(42, 77, 128, 0.92);
+  --line: #f0b43a;
+  --line-dark: #030d1d;
+  --ink: #f4f8ff;
+  --ink-dim: #aac8f0;
+  --accent: #ffcc3d;
+  --accent-ink: #281c02;
+  --accent-2: #ff6a5a;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 240, 180, 58;
+  --accent-rgb: 255, 204, 61;
+  --shade-rgb: 2, 10, 23;
+  --card: rgba(38, 75, 130, 0.7);
+  --btn-1: #536372;
+  --btn-2: #2f507f;
+  --btn-h1: #656c6c;
+  --btn-h2: #415a78;
+  --field: #041023;
+  --field-2: #020a17;
+  --ink-faint: #5d84bd;
+  --acc-hi: #ffe08b;
+  --acc-lo: #e6b837;
+  --acc-hi2: #ffebb1;
+  --acc-lo2: #ffd45a;
+  --title-1: #485d76;
+  --title-2: #224984;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

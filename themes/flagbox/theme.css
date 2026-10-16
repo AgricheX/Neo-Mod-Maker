@@ -1,0 +1,33 @@
+:root[data-theme="flagbox"] {
+  --bg-0: #14101c;
+  --bg-1: #2a2240;
+  --panel: rgba(25, 20, 37, 0.88);
+  --panel-2: rgba(61, 51, 69, 0.92);
+  --line: #c9b46a;
+  --line-dark: #0a080e;
+  --ink: #f6f0e0;
+  --ink-dim: #c7bfa8;
+  --accent: #f0c850;
+  --accent-ink: #241a04;
+  --accent-2: #9ec4ff;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 201, 180, 106;
+  --accent-rgb: 240, 200, 80;
+  --shade-rgb: 8, 6, 11;
+  --card: rgba(57, 48, 68, 0.7);
+  --btn-1: #5a4e4d;
+  --btn-2: #403646;
+  --btn-h1: #665950;
+  --btn-h2: #4d4249;
+  --field: #0c0a11;
+  --field-2: #08060b;
+  --ink-faint: #787074;
+  --acc-hi: #f6de96;
+  --acc-lo: #d8b448;
+  --acc-hi2: #f9e9b9;
+  --acc-lo2: #f2d06a;
+  --title-1: #52464a;
+  --title-2: #372e43;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

@@ -1,0 +1,36 @@
+:root[data-theme="ocean-of-souls"] {
+  --bg-0: #0a0e34;
+  --bg-1: #1c2468;
+  --panel: rgba(12, 18, 62, 0.88);
+  --panel-2: rgba(36, 40, 110, 0.92);
+  --line: #8a92e8;
+  --line-dark: #050824;
+  --ink: #e6ecff;
+  --ink-dim: #a6b4e8;
+  --accent: #ffe296;
+  --accent-ink: #2b1c06;
+  --accent-2: #9ccbff;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --title-bg: linear-gradient(180deg, #2f3790, #1f2768);
+}
+
+:root[data-theme="ocean-of-souls"] .panel {
+  background-image: none;
+}
+
+:root[data-theme="ocean-of-souls"] .panel > h2:first-child::after {
+  content: "";
+  display: block;
+  height: 6px;
+  margin: 8px -18px -9px;
+  background: url(img/wave.png) repeat-x 0 0 / 214px 6px;
+  image-rendering: pixelated;
+  opacity: 0.55;
+}
+
+:root[data-theme="ocean-of-souls"] .img-prev {
+  background: url(img/soul_bg.png) center / cover;
+  image-rendering: pixelated;
+}
+

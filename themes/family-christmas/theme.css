@@ -1,0 +1,33 @@
+:root[data-theme="family-christmas"] {
+  --bg-0: #1c0b08;
+  --bg-1: #4a1712;
+  --panel: rgba(38, 14, 10, 0.9);
+  --panel-2: rgba(92, 41, 24, 0.92);
+  --line: #e6b54a;
+  --line-dark: #0e0604;
+  --ink: #fff6e6;
+  --ink-dim: #efcfb0;
+  --accent: #f2c45a;
+  --accent-ink: #2a1500;
+  --accent-2: #6fc07a;
+  --danger: #ff8a9a;
+  --ok: #8fe0a0;
+  --line-rgb: 230, 181, 74;
+  --accent-rgb: 242, 196, 90;
+  --shade-rgb: 11, 4, 3;
+  --card: rgba(70, 26, 18, 0.78);
+  --btn-1: #794623;
+  --btn-2: #602d1a;
+  --btn-h1: #855327;
+  --btn-h2: #6c3a1e;
+  --field: #110705;
+  --field-2: #0b0403;
+  --ink-faint: #9c7361;
+  --acc-hi: #f7dc9c;
+  --acc-lo: #dab051;
+  --acc-hi2: #fae7bd;
+  --acc-lo2: #f4cd73;
+  --title-1: #713e20;
+  --title-2: #562416;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

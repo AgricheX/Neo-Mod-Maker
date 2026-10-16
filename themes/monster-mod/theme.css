@@ -1,0 +1,33 @@
+:root[data-theme="monster-mod"] {
+  --bg-0: #1a0d06;
+  --bg-1: #3a2410;
+  --panel: rgba(34, 18, 8, 0.88);
+  --panel-2: rgba(77, 47, 21, 0.92);
+  --line: #e0873a;
+  --line-dark: #0d0603;
+  --ink: #fff0e0;
+  --ink-dim: #e0bd98;
+  --accent: #ffc23d;
+  --accent-ink: #2a1500;
+  --accent-2: #7fd35c;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 224, 135, 58;
+  --accent-rgb: 255, 194, 61;
+  --shade-rgb: 10, 5, 2;
+  --card: rgba(74, 45, 20, 0.7);
+  --btn-1: #6c421d;
+  --btn-2: #513216;
+  --btn-h1: #794a20;
+  --btn-h2: #5f3a19;
+  --field: #100804;
+  --field-2: #0a0502;
+  --ink-faint: #8d7054;
+  --acc-hi: #ffda8b;
+  --acc-lo: #e6af37;
+  --acc-hi2: #ffe7b1;
+  --acc-lo2: #ffcb5a;
+  --title-1: #643d1a;
+  --title-2: #472c13;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

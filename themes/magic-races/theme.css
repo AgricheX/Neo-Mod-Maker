@@ -1,0 +1,33 @@
+:root[data-theme="magic-races"] {
+  --bg-0: #220630;
+  --bg-1: #5a1a6a;
+  --panel: rgba(48, 11, 62, 0.88);
+  --panel-2: rgba(109, 37, 118, 0.92);
+  --line: #ff7ad0;
+  --line-dark: #110318;
+  --ink: #fff0fa;
+  --ink-dim: #e8b4e0;
+  --accent: #ffd8ff;
+  --accent-ink: #2a0830;
+  --accent-2: #8ae8ff;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 255, 122, 208;
+  --accent-rgb: 255, 216, 255;
+  --shade-rgb: 13, 2, 19;
+  --card: rgba(106, 35, 116, 0.7);
+  --btn-1: #8c3789;
+  --btn-2: #712778;
+  --btn-h1: #993e91;
+  --btn-h2: #7e2f80;
+  --field: #14041d;
+  --field-2: #0e0213;
+  --ink-faint: #a167a5;
+  --acc-hi: #ffe8ff;
+  --acc-lo: #e6c2e6;
+  --acc-hi2: #ffefff;
+  --acc-lo2: #ffdeff;
+  --title-1: #833284;
+  --title-2: #672272;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

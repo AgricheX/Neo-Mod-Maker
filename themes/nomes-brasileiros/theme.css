@@ -1,0 +1,33 @@
+:root[data-theme="nomes-brasileiros"] {
+  --bg-0: #032812;
+  --bg-1: #0a5a28;
+  --panel: rgba(4, 52, 23, 0.88);
+  --panel-2: rgba(38, 105, 39, 0.92);
+  --line: #f6d824;
+  --line-dark: #021409;
+  --ink: #f2fff0;
+  --ink-dim: #b4e4b0;
+  --accent: #ffe03d;
+  --accent-ink: #1e2a02;
+  --accent-2: #5aa8ff;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 246, 216, 36;
+  --accent-rgb: 255, 224, 61;
+  --shade-rgb: 1, 16, 7;
+  --card: rgba(33, 102, 39, 0.7);
+  --btn-1: #518027;
+  --btn-2: #2b6c27;
+  --btn-h1: #648a26;
+  --btn-h2: #3e7627;
+  --field: #02180b;
+  --field-2: #011007;
+  --ink-faint: #5f9f6c;
+  --acc-hi: #ffec8b;
+  --acc-lo: #e6ca37;
+  --acc-hi2: #fff3b1;
+  --acc-lo2: #ffe55a;
+  --title-1: #457a27;
+  --title-2: #1d6428;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

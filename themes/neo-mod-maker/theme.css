@@ -1,0 +1,33 @@
+:root[data-theme="neo-mod-maker"] {
+  --bg-0: #04101a;
+  --bg-1: #0c3440;
+  --panel: rgba(6, 25, 35, 0.88);
+  --panel-2: rgba(16, 72, 79, 0.92);
+  --line: #2fe0c0;
+  --line-dark: #02080d;
+  --ink: #e8fffa;
+  --ink-dim: #98d8cc;
+  --accent: #3dffb5;
+  --accent-ink: #03241a;
+  --accent-2: #ff8ad0;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 47, 224, 192;
+  --accent-rgb: 61, 255, 181;
+  --shade-rgb: 1, 6, 10;
+  --card: rgba(15, 69, 76, 0.7);
+  --btn-1: #166866;
+  --btn-2: #114c52;
+  --btn-h1: #197571;
+  --btn-h2: #145a5c;
+  --field: #020a10;
+  --field-2: #02060a;
+  --ink-faint: #528686;
+  --acc-hi: #8bffd3;
+  --acc-lo: #37e6a3;
+  --acc-hi2: #b1ffe1;
+  --acc-lo2: #5affc0;
+  --title-1: #155f60;
+  --title-2: #0f424a;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

@@ -1,0 +1,33 @@
+:root[data-theme="naval-battle"] {
+  --bg-0: #04122e;
+  --bg-1: #0c3070;
+  --panel: rgba(6, 25, 62, 0.88);
+  --panel-2: rgba(21, 62, 127, 0.92);
+  --line: #5aa8f0;
+  --line-dark: #020917;
+  --ink: #eef6ff;
+  --ink-dim: #a4c4ec;
+  --accent: #ffd04a;
+  --accent-ink: #241a04;
+  --accent-2: #ff7a8a;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 90, 168, 240;
+  --accent-rgb: 255, 208, 74;
+  --shade-rgb: 1, 7, 18;
+  --card: rgba(19, 60, 124, 0.7);
+  --btn-1: #235496;
+  --btn-2: #174182;
+  --btn-h1: #2a5ea1;
+  --btn-h2: #1d4a8c;
+  --field: #020b1c;
+  --field-2: #020712;
+  --ink-faint: #587aae;
+  --acc-hi: #ffe392;
+  --acc-lo: #e6bb43;
+  --acc-hi2: #ffecb7;
+  --acc-lo2: #ffd765;
+  --title-1: #204e90;
+  --title-2: #123a7a;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

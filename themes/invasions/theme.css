@@ -1,0 +1,33 @@
+:root[data-theme="invasions"] {
+  --bg-0: #1c0405;
+  --bg-1: #4a0c10;
+  --panel: rgba(39, 6, 7, 0.88);
+  --panel-2: rgba(95, 23, 21, 0.92);
+  --line: #ff6a3a;
+  --line-dark: #0e0202;
+  --ink: #fff0e8;
+  --ink-dim: #f0b8a8;
+  --accent: #ffd23d;
+  --accent-ink: #2a1200;
+  --accent-2: #ff9a5a;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 255, 106, 58;
+  --accent-rgb: 255, 210, 61;
+  --shade-rgb: 11, 1, 2;
+  --card: rgba(92, 21, 20, 0.7);
+  --btn-1: #80281d;
+  --btn-2: #631916;
+  --btn-h1: #8f3020;
+  --btn-h2: #722119;
+  --field: #110203;
+  --field-2: #0b0202;
+  --ink-faint: #9d625c;
+  --acc-hi: #ffe48b;
+  --acc-lo: #e6bd37;
+  --acc-hi2: #ffedb1;
+  --acc-lo2: #ffd95a;
+  --title-1: #77241a;
+  --title-2: #581413;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

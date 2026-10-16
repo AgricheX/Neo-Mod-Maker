@@ -1,0 +1,33 @@
+:root[data-theme="isekai"] {
+  --bg-0: #1a0c0a;
+  --bg-1: #44201a;
+  --panel: rgba(36, 17, 14, 0.88);
+  --panel-2: rgba(88, 44, 29, 0.92);
+  --line: #ee8a3a;
+  --line-dark: #0d0605;
+  --ink: #fff0e2;
+  --ink-dim: #e8c4a4;
+  --accent: #ffb63d;
+  --accent-ink: #2a1400;
+  --accent-2: #ffd88a;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 238, 138, 58;
+  --accent-rgb: 255, 182, 61;
+  --shade-rgb: 10, 4, 4;
+  --card: rgba(85, 42, 29, 0.7);
+  --btn-1: #774024;
+  --btn-2: #5c2f1e;
+  --btn-h1: #854826;
+  --btn-h2: #693721;
+  --field: #100706;
+  --field-2: #0a0504;
+  --ink-faint: #96725f;
+  --acc-hi: #ffd38b;
+  --acc-lo: #e6a437;
+  --acc-hi2: #ffe2b1;
+  --acc-lo2: #ffc15a;
+  --title-1: #6e3a22;
+  --title-2: #52281d;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}
