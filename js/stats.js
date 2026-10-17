@@ -64,8 +64,7 @@ MM.stats = (function () {
     var status = h('p', { class: 'f-hint2', text: T('Carregando...', 'Loading...') });
     panel.appendChild(status);
     var refresh = h('button', { class: 'btn', type: 'button', text: T('Atualizar', 'Refresh') });
-    var link = h('a', { class: 'btn', href: SITE, target: '_blank', rel: 'noopener', text: T('Ver painel completo', 'Open full dashboard') });
-    panel.appendChild(h('div', { class: 'btn-row' }, refresh, link));
+    panel.appendChild(h('div', { class: 'btn-row' }, refresh));
     root.appendChild(panel);
 
     function run() {
@@ -76,9 +75,9 @@ MM.stats = (function () {
         vals.visits.textContent = fmt(num(r[0].count));
         EVENTS.forEach(function (e, i) { vals[e.path].textContent = fmt(num(r[i + 1].count)); });
         status.textContent = T('Atualizado às ', 'Updated at ') + new Date().toLocaleTimeString(MM.lang === 'br' ? 'pt-BR' : MM.lang);
-      }).catch(function () {
+      }).catch(function (err) {
         Object.keys(vals).forEach(function (k) { if (vals[k].textContent === '...') vals[k].textContent = '-'; });
-        status.textContent = T('Não foi possível carregar agora. Um bloqueador de anúncios, ou o painel ainda não estar público, pode causar isso.', 'Could not load right now. An ad blocker, or a dashboard that is not public yet, can cause this.');
+        status.textContent = T('Não foi possível carregar agora. Um bloqueador de anúncios, ou o painel ainda não estar público, pode causar isso.', 'Could not load right now. An ad blocker, or a dashboard that is not public yet, can cause this.') + ' [' + String(err && err.message || err) + ']';
       });
     }
     refresh.addEventListener('click', run);
