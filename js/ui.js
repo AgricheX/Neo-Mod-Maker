@@ -1072,7 +1072,7 @@ MM.ui = (function () {
       T('Fontes: Atkinson Hyperlegible, IBM Plex Mono e Pixelify Sans, via Google Fonts.', 'Fonts: Atkinson Hyperlegible, IBM Plex Mono and Pixelify Sans, via Google Fonts.')
     ].forEach(function (t) { ul.appendChild(h('li', { text: t })); });
     panel.appendChild(ul);
-    var legal = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: T('Direitos autorais', 'Copyright') }));
+    var legal = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: T('Direitos autorais dos assets do WorldBox', 'WorldBox assets copyright') }));
     legal.appendChild(h('p', {}, h('strong', { text: 'WorldBox \u00a9 Maxim Karpenko / MakoMako' })));
     legal.appendChild(h('p', { text: 'WorldBox sprites and assets are the property of their respective copyright holders and are used with permission for non-commercial modding purposes only.' }));
     legal.appendChild(h('p', { text: 'Neo Mod Maker is an independent fan-made tool and is not affiliated with or endorsed by the WorldBox developers.' }));

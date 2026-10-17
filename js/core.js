@@ -36,7 +36,7 @@ MM.t = function (key) {
 MM.L = function (o) {
   if (o === null || o === undefined) return '';
   if (typeof o === 'string') return o;
-  var v = MM.lang === 'br' ? o.pt : o[MM.lang];
+  var v = MM.lang === 'br' ? o.pt : (MM.lang === 'id' ? '' : o[MM.lang]);
   if (v) return v;
   var p = MM.i18n[MM.lang];
   if (p && o.en && p[o.en]) return p[o.en];
