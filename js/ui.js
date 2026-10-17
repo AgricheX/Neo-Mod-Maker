@@ -672,7 +672,7 @@ MM.ui = (function () {
             if (p === 'force') dyn.appendChild(F.number(T('Força', 'Force'), a.p, 'force', { step: 0.1 }));
             if (p === 'intensity') dyn.appendChild(F.number(T('Intensidade', 'Intensity'), a.p, 'intensity', { step: 0.5 }));
             if (p === 'unit') {
-              var units = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S.units.map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
+              var units = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S.units.concat(S.species || []).map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
               dyn.appendChild(F.select(T('Unidade criada por você', 'Your unit'), a.p, 'unit', units));
               dyn.appendChild(F.text(T('...ou ID de unidade do jogo', '...or vanilla unit ID'), a.p, 'unit', { placeholder: 'sheep' }));
             }
@@ -783,7 +783,7 @@ MM.ui = (function () {
       editor: function (d, S, refresh, host) {
         host.appendChild(F.i18n(T('Nome', 'Name'), d, 'name', { onchange: refresh, random: 'disaster' }));
         host.appendChild(F.i18n(T('Mensagem no log', 'World log message'), d, 'log'));
-        var uopts = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S.units.map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
+        var uopts = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S.units.concat(S.species || []).map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
         host.appendChild(F.select(T('Unidade que aparece', 'Spawned unit'), d, 'unit', uopts));
         host.appendChild(F.text(T('...ou ID de unidade do jogo', '...or vanilla unit ID'), d, 'unit', { placeholder: 'bandit' }));
         host.appendChild(F.select(T('Tipo', 'Type'), d, 'type', F.opts(D.disasterTypes)));
@@ -819,7 +819,7 @@ MM.ui = (function () {
       editor: function (b, S2, refresh, host) {
         host.appendChild(F.i18n(T('Nome', 'Name'), b, 'name', { onchange: refresh, random: 'button' }));
         host.appendChild(F.i18n(T('Descrição', 'Description'), b, 'desc', { random: 'desc' }));
-        var uopts = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S2.units.map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
+        var uopts = [{ v: '', l: T('(escolha)', '(pick)') }].concat(S2.units.concat(S2.species || []).map(function (u) { return { v: u.id, l: u.id + ' *' }; }));
         host.appendChild(F.select(T('Criatura criada', 'Spawned creature'), b, 'unit', uopts));
         host.appendChild(F.text(T('...ou ID de unidade do jogo', '...or vanilla unit ID'), b, 'unit', { placeholder: 'sheep' }));
         host.appendChild(F.select(T('Nível do poder', 'Power rank'), b, 'rank', F.opts(D.powerRanks)));

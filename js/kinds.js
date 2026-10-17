@@ -9,7 +9,8 @@ MM.kinds = (function () {
 
   function customIds(S, name) {
     var arr = S[name];
-    if (!Array.isArray(arr)) return [];
+    if (!Array.isArray(arr)) arr = [];
+    if (name === 'units' && Array.isArray(S.species)) arr = arr.concat(S.species);
     return arr.map(function (x) { return x.id; }).filter(Boolean);
   }
 

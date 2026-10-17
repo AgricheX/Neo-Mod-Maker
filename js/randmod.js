@@ -278,7 +278,7 @@ MM.randomMod = function (keepLocales) {
     d.id = uidFor('disasters', d.name, 'disaster');
     d.log = { en: d.name.en + ' arrives!' };
     (S.locales || []).forEach(function (l) { if (l !== 'en') d.log[l] = R.tr(l, 'log', d.name[l] || d.name.en) || d.log.en; });
-    d.unit = R.pick(S.units).id;
+    d.unit = R.pick(S.units.concat(S.species || [])).id;
     d.chance = R.num(0.1, 0.8, 0.05);
     d.minPop = R.pick([0, 100, 300, 600]);
     d.minCities = R.int(0, 4);
@@ -316,7 +316,7 @@ MM.randomMod = function (keepLocales) {
   S.buildings.forEach(function (b, bi) {
     b.baseId = R.pick(['bonfire', 'tent_human', 'house_human_0', 'watch_tower_human']);
     if (S.drops.length) b.spawnDrop = R.pick(S.drops).id;
-    b.spawnUnit = R.pick(S.units).id;
+    b.spawnUnit = R.pick(S.units.concat(S.species || [])).id;
     if (S.projectiles.length) b.towerProj = (freeProj[bi] || R.pick(S.projectiles)).id;
   });
   addKind('resources', R.int(1, 2));
@@ -369,10 +369,10 @@ MM.randomMod = function (keepLocales) {
     var act = S.actions.filter(function (a) { return a.id === any; })[0];
     if (act && !SAFE[act.preset]) {
       e.action = any;
-      e.unit = R.pick(S.units).id;
+      e.unit = R.pick(S.units.concat(S.species || [])).id;
     } else {
       e.action = act ? any : safeWorld();
-      if (R.chance(0.4)) e.unit = R.pick(S.units).id;
+      if (R.chance(0.4)) e.unit = R.pick(S.units.concat(S.species || [])).id;
     }
     e.chance = R.pick([20, 40, 100]);
   });
@@ -380,7 +380,7 @@ MM.randomMod = function (keepLocales) {
 
   S.drops.forEach(function (d, i) {
     if (i === 0) { d.effect = 'status'; d.status = S.status.length ? S.status[0].id : 'burning'; d.duration = R.pick([5, 10]); }
-    else if (i === 1) { d.effect = 'spawn'; d.unit = R.pick(S.units).id; d.count = R.int(1, 3); }
+    else if (i === 1) { d.effect = 'spawn'; d.unit = R.pick(S.units.concat(S.species || [])).id; d.count = R.int(1, 3); }
     else if (i === 2) { d.effect = 'action'; d.action = actOf('world'); if (!d.action) d.effect = 'none'; }
   });
 
