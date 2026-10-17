@@ -280,5 +280,5 @@ MM.libraryUI = (function () {
     ensure(cat, function () { paintGroups(); paintGrid(); });
   }
 
-  return { open: open, pool: pool, random: random, fill: fill, isAnim: isAnim, frames: allFrames };
+  return { open: open, pool: pool, random: random, fill: fill, isAnim: isAnim, frames: allFrames, loadPack: loadPack };
 })();

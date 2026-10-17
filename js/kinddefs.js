@@ -719,7 +719,7 @@
   function bodyFields() {
     var out = [
       { t: 'h', l: ['Corpos próprios', 'Own bodies'] },
-      { k: 'bodyNote', t: 'note', l: ['Ligue para desenhar o corpo de cada papel. O macho é obrigatório; papéis vazios usam o corpo do macho. Todos os papéis precisam ter o mesmo número de quadros.', 'Turn on to draw the body of each role. Male is required; empty roles use the male body. All roles need the same number of frames.'] },
+      { k: 'bodyNote', t: 'note', l: ['Ligue para desenhar o corpo de cada papel. O macho é obrigatório; papéis vazios usam o corpo do macho. Andar e nadar podem ter números de quadros diferentes.', 'Turn on to draw the body of each role. Male is required; empty roles use the male body.'] },
       { k: 'ownBody', t: 'bool', l: ['Usar corpos próprios', 'Use own bodies'], d: false, rerender: true }
     ];
     [['bd_', ['Corpos andando', 'Walking bodies']], ['bs_', ['Corpos nadando (opcional)', 'Swimming bodies (optional)']]].forEach(function (g) {

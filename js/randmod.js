@@ -235,7 +235,32 @@ MM.randomMod = function (keepLocales) {
   });
 
   addKind('spells', R.int(1, 2));
-  addKind('species', R.int(1, 2), function (e) { e.ownStyle = true; });
+  function raceBodies(e) {
+    var byRace = {};
+    ((MM.library && MM.library.items) || []).concat((MM.libExtra && MM.libExtra.creatures) || []).forEach(function (it) {
+      if (it[0] !== 'creatures' || it[1] !== 'races' || !it[7] || !it[7].length) return;
+      var m = /^(\w+) (.+)$/.exec(it[2]);
+      if (m) (byRace[m[1]] = byRace[m[1]] || {})[m[2]] = it;
+    });
+    var names = Object.keys(byRace).filter(function (r) { return byRace[r].male_1; });
+    var swimmers = names.filter(function (r) { return byRace[r].male_1[8]; });
+    if (!names.length) return;
+    var race = byRace[R.pick(swimmers.length ? swimmers : names)];
+    var roles = { male: ['male_1', 'male_2'], female: ['female_1', 'female_2'], warrior: ['warrior_1', 'warrior_2'], king: ['king'], leader: ['leader'], child: ['child'] };
+    e.ownBody = true;
+    Object.keys(roles).forEach(function (role) {
+      var it = null;
+      roles[role].forEach(function (n) { if (!it && race[n]) it = race[n]; });
+      if (!it) return;
+      var fr = MM.libraryUI.frames(it);
+      MM.anim.set(e, 'bd_' + role, fr[0], fr.slice(1), it[6] || 8);
+      if (it[8] && it[8].length) {
+        var sw = it[8].map(function (b) { return 'data:image/png;base64,' + b; });
+        MM.anim.set(e, 'bs_' + role, sw[0], sw.slice(1), it[6] || 8);
+      }
+    });
+  }
+  addKind('species', R.int(1, 2), function (e) { e.ownStyle = true; raceBodies(e); });
   S.spells.forEach(function (sp) { sp.action = actOf('attack'); });
 
   many(Math.max(3, S.kingdoms.length) + R.int(0, 2), function (i) {

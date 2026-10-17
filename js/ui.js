@@ -502,11 +502,13 @@ MM.ui = (function () {
     var rnd = h('button', { class: 'btn primary', type: 'button', text: T('Gerar mod 100% aleatório', 'Generate 100% random mod') });
     rnd.addEventListener('click', function () {
       MM.confirm(T('Isto substitui o projeto atual por um mod totalmente aleatório. Continuar?', 'This replaces the current project with a fully random mod. Continue?'), function () {
-        MM.store.replace(MM.randomMod(true));
-        MM.stats.event('random-mod', 'Random mod');
-        MM.stats.markRandom();
-        MM.toast(T('Mod aleatório gerado.', 'Random mod generated.'));
-        MM.app.render();
+        MM.libraryUI.loadPack('creatures', function () {
+          MM.store.replace(MM.randomMod(true));
+          MM.stats.event('random-mod', 'Random mod');
+          MM.stats.markRandom();
+          MM.toast(T('Mod aleatório gerado.', 'Random mod generated.'));
+          MM.app.render();
+        });
       });
     });
     panel.appendChild(h('div', { class: 'btn-row' }, rnd, h('span', { class: 'f-hint2', text: T('Preenche todas as páginas com conteúdo aleatório. Dá para desfazer com Ctrl+Z.', 'Fills every page with random content. You can undo with Ctrl+Z.') })));
