@@ -504,6 +504,7 @@ MM.ui = (function () {
       MM.confirm(T('Isto substitui o projeto atual por um mod totalmente aleatório. Continuar?', 'This replaces the current project with a fully random mod. Continue?'), function () {
         MM.store.replace(MM.randomMod(true));
         MM.stats.event('random-mod', 'Random mod');
+        MM.stats.markRandom();
         MM.toast(T('Mod aleatório gerado.', 'Random mod generated.'));
         MM.app.render();
       });
@@ -878,7 +879,7 @@ MM.ui = (function () {
       MM.img.writeSlots(S, out, folder);
       if (!S.meta.img) out[folder + '/icon.png'] = MM.img.bytes(placeholderIcon());
       MM.download(folder + '.zip', MM.zip.build(out));
-      MM.stats.event('export', 'Export mod');
+      MM.stats.exported();
     });
     var saveBtn = h('button', { class: 'btn', type: 'button', text: T('Salvar projeto (.json)', 'Save project (.json)') });
     saveBtn.addEventListener('click', function () {

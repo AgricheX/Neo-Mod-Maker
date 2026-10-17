@@ -3,11 +3,35 @@ MM.stats = (function () {
   var T = function (pt, en) { return MM.tr(pt, en); };
   var SITE = 'https://agriche.goatcounter.com';
   var LIVE = /(^|\.)agrichex\.github\.io$/.test(location.hostname);
-  var EVENTS = [
-    { path: 'export', pt: 'Mods exportados', en: 'Mods exported' },
-    { path: 'random-mod', pt: 'Mods 100% aleatórios', en: '100% random mods' }
-  ];
   var timer = null;
+  var KEY = 'mm_rand_sig';
+  var memo = null;
+
+  function sig() {
+    var s = MM.store.exportJson(true);
+    var x = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      x ^= s.charCodeAt(i);
+      x = Math.imul(x, 16777619);
+    }
+    return (x >>> 0).toString(16) + ':' + s.length;
+  }
+
+  function markRandom() {
+    memo = sig();
+    try { localStorage.setItem(KEY, memo); } catch (e) {}
+  }
+
+  function isPure() {
+    var ref = memo;
+    if (!ref) { try { ref = localStorage.getItem(KEY); } catch (e) {} }
+    return !!ref && ref === sig();
+  }
+
+  function exported() {
+    event('export', 'Export mod');
+    if (isPure()) event('export-random', 'Export random mod');
+  }
 
   function load() {
     if (!LIVE || document.getElementById('gc-count')) return;
@@ -50,9 +74,12 @@ MM.stats = (function () {
     panel.appendChild(h('h2', { text: T('Estatísticas', 'Statistics') }));
     panel.appendChild(h('p', { text: T('Números públicos do Neo Mod Maker, atualizados quase em tempo real. A contagem é anônima e aproximada: o site só conta visitas e cliques em botões, e o conteúdo dos seus mods nunca sai do navegador.', 'Public Neo Mod Maker numbers, updated almost in real time. The count is anonymous and approximate: the site only counts visits and button clicks, and the content of your mods never leaves the browser.') }));
     var cards = [
-      { id: 'visitors', label: T('Visitantes', 'Visitors') },
-      { id: 'visits', label: T('Visitas', 'Visits') }
-    ].concat(EVENTS.map(function (e) { return { id: e.path, label: T(e.pt, e.en) }; }));
+      { id: 'visitors', label: T('Visitantes Únicos', 'Unique Visitors') },
+      { id: 'visits', label: T('Acessos Totais Ao Site', 'Total Site Visits') },
+      { id: 'export', label: T('Mods Exportados', 'Mods Exported') },
+      { id: 'manual', label: T('Mods Manuais', 'Manual Mods') },
+      { id: 'random', label: T('Mods 100% Aleatórios', '100% Random Mods') }
+    ];
     var grid = h('div', { class: 'stat-grid' });
     var vals = {};
     cards.forEach(function (c) {
@@ -69,11 +96,14 @@ MM.stats = (function () {
 
     function run() {
       if (!document.body.contains(panel)) { clearInterval(timer); timer = null; return; }
-      var jobs = [fetchCount('TOTAL')].concat(EVENTS.map(function (e) { return fetchCount(e.path); }));
-      Promise.all(jobs).then(function (r) {
+      Promise.all([fetchCount('TOTAL'), fetchCount('export'), fetchCount('export-random')]).then(function (r) {
+        var total = num(r[1].count);
+        var random = Math.min(num(r[2].count), total);
         vals.visitors.textContent = fmt(num(r[0].count_unique));
         vals.visits.textContent = fmt(num(r[0].count));
-        EVENTS.forEach(function (e, i) { vals[e.path].textContent = fmt(num(r[i + 1].count)); });
+        vals.export.textContent = fmt(total);
+        vals.manual.textContent = fmt(total - random);
+        vals.random.textContent = fmt(random);
         status.textContent = T('Atualizado às ', 'Updated at ') + new Date().toLocaleTimeString(MM.lang === 'br' ? 'pt-BR' : MM.lang);
       }).catch(function () {
         Object.keys(vals).forEach(function (k) { if (vals[k].textContent === '...') vals[k].textContent = '-'; });
@@ -89,5 +119,5 @@ MM.stats = (function () {
 
   MM.ui.screens.stats = screen;
   load();
-  return { event: event, load: load };
+  return { event: event, load: load, markRandom: markRandom, exported: exported };
 })();
