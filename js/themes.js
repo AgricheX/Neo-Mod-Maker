@@ -4,7 +4,16 @@ MM.themes = (function () {
 
   function register(t) { registry[t.id] = t; }
 
-  function list() { return Object.keys(registry).map(function (k) { return registry[k]; }); }
+  var ORDER = ['ocean-of-souls', 'neo-mod-maker', 'mod-maker-1', 'mod-maker-2', 'mod-maker-3', 'monster-mod', 'flagbox', 'invasions', 'nomes-brasileiros', 'one-piece', 'magic-races', 'naval-battle', 'isekai', 'family-christmas'];
+
+  function rank(id) {
+    var i = ORDER.indexOf(id);
+    return i < 0 ? ORDER.length : i;
+  }
+
+  function list() {
+    return Object.keys(registry).map(function (k) { return registry[k]; }).sort(function (a, b) { return rank(a.id) - rank(b.id); });
+  }
 
   function loadAll(ids, done) {
     var left = ids.length;
