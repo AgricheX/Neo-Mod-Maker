@@ -253,7 +253,7 @@ MM.forum = (function () {
     },
     {
       id: 'projectiles', page: 'projectiles', sec: ['Lógica', 'Logic'], t: ['Projéteis', 'Projectiles'],
-      intro: ['Objetos lançados por armas e magias à distância.', 'Objects thrown by ranged weapons and spells.'],
+      intro: ['Objetos lançados por armas à distância.', 'Objects thrown by ranged weapons.'],
       f: [
         [['Imagem e textura', 'Image and texture'], ['Seu desenho ou o nome de uma textura do jogo.', 'Your drawing or the name of a game texture.']],
         [['Velocidade e escalas', 'Speed and scales'], ['Rapidez do voo e tamanho no começo e no fim.', 'Flight speed and size at start and end.']],
