@@ -75,9 +75,9 @@ MM.stats = (function () {
         vals.visits.textContent = fmt(num(r[0].count));
         EVENTS.forEach(function (e, i) { vals[e.path].textContent = fmt(num(r[i + 1].count)); });
         status.textContent = T('Atualizado às ', 'Updated at ') + new Date().toLocaleTimeString(MM.lang === 'br' ? 'pt-BR' : MM.lang);
-      }).catch(function (err) {
+      }).catch(function () {
         Object.keys(vals).forEach(function (k) { if (vals[k].textContent === '...') vals[k].textContent = '-'; });
-        status.textContent = T('Não foi possível carregar agora. Um bloqueador de anúncios, ou o painel ainda não estar público, pode causar isso.', 'Could not load right now. An ad blocker, or a dashboard that is not public yet, can cause this.') + ' [' + String(err && err.message || err) + ']';
+        status.textContent = T('Não foi possível carregar as estatísticas agora.', 'Could not load the statistics right now.');
       });
     }
     refresh.addEventListener('click', run);
