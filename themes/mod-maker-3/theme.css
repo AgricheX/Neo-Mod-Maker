@@ -1,0 +1,33 @@
+:root[data-theme="mod-maker-3"] {
+  --bg-0: #0a2a66;
+  --bg-1: #1a5fb8;
+  --panel: rgba(14, 55, 122, 0.88);
+  --panel-2: rgba(34, 111, 192, 0.92);
+  --line: #5fe6ff;
+  --line-dark: #051533;
+  --ink: #f2fcff;
+  --ink-dim: #bfe6ff;
+  --accent: #7ff0ff;
+  --accent-ink: #03253a;
+  --accent-2: #ffcf8a;
+  --danger: #ff8a9a;
+  --ok: #86e8b8;
+  --line-rgb: 95, 230, 255;
+  --accent-rgb: 127, 240, 255;
+  --shade-rgb: 4, 16, 40;
+  --card: rgba(32, 108, 191, 0.7);
+  --btn-1: #2f88cd;
+  --btn-2: #2472c2;
+  --btn-h1: #3492d3;
+  --btn-h2: #297dc8;
+  --field: #06193d;
+  --field-2: #041129;
+  --ink-faint: #6ca2dc;
+  --acc-hi: #b2f6ff;
+  --acc-lo: #72d8e6;
+  --acc-hi2: #ccf9ff;
+  --acc-lo2: #92f2ff;
+  --title-1: #2b81ca;
+  --title-2: #206abe;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}
