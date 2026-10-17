@@ -132,6 +132,23 @@ MM.libraryUI = (function () {
     return src(it);
   }
 
+  var SMALL = { de: 1, do: 1, da: 1, e: 1, o: 1, a: 1, para: 1, and: 1, of: 1, the: 1, for: 1, to: 1, in: 1 };
+  var GROUP_NAMES = { OceanOfSouls: 'Ocean of Souls', icons: 'Icons (Kots)', Icons: 'Icons (Races)' };
+
+  function tabLabel(c) {
+    var s = T(c[1][0], c[1][1]);
+    if (MM.lang !== 'br' && MM.lang !== 'en') return s;
+    return s.split(' ').map(function (w, i) {
+      return i > 0 && SMALL[w.toLowerCase()] ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1);
+    }).join(' ');
+  }
+
+  function groupLabel(g) {
+    if (GROUP_NAMES[g]) return GROUP_NAMES[g];
+    var s = g.replace(/_/g, ' ').replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
   function open(key, size, done, opts) {
     opts = opts || {};
     var animSlot = !!opts.anim;
@@ -179,7 +196,7 @@ MM.libraryUI = (function () {
       inCat().forEach(function (it) { if (gs.indexOf(it[1]) < 0) gs.push(it[1]); });
       groupSel.innerHTML = '';
       groupSel.appendChild(h('option', { value: '', text: T('Todos os grupos', 'All groups') }));
-      gs.forEach(function (g) { groupSel.appendChild(h('option', { value: g, text: g })); });
+      gs.forEach(function (g) { groupSel.appendChild(h('option', { value: g, text: groupLabel(g) })); });
       if (gs.indexOf(group) < 0) group = '';
       groupSel.value = group;
     }
@@ -222,7 +239,7 @@ MM.libraryUI = (function () {
       CATS.forEach(function (c) {
         var n = lib.filter(function (it) { return it[0] === c[0]; }).length + packCount(c[0]) * (packLoaded(c[0]) ? 0 : 1);
         if (!n) return;
-        var b = h('button', { type: 'button', class: 'subtab' + (c[0] === cat ? ' on' : ''), text: T(c[1][0], c[1][1]) });
+        var b = h('button', { type: 'button', class: 'subtab' + (c[0] === cat ? ' on' : ''), text: tabLabel(c) });
         b.addEventListener('click', function () { cat = c[0]; group = ''; paintTabs(); ensure(cat, function () { if (c[0] !== cat) return; paintGroups(); paintGrid(); }); });
         tabs.appendChild(b);
       });
