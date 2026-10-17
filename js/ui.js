@@ -503,6 +503,7 @@ MM.ui = (function () {
     rnd.addEventListener('click', function () {
       MM.confirm(T('Isto substitui o projeto atual por um mod totalmente aleatório. Continuar?', 'This replaces the current project with a fully random mod. Continue?'), function () {
         MM.store.replace(MM.randomMod(true));
+        MM.stats.event('random-mod', 'Random mod');
         MM.toast(T('Mod aleatório gerado.', 'Random mod generated.'));
         MM.app.render();
       });
@@ -877,6 +878,7 @@ MM.ui = (function () {
       MM.img.writeSlots(S, out, folder);
       if (!S.meta.img) out[folder + '/icon.png'] = MM.img.bytes(placeholderIcon());
       MM.download(folder + '.zip', MM.zip.build(out));
+      MM.stats.event('export', 'Export mod');
     });
     var saveBtn = h('button', { class: 'btn', type: 'button', text: T('Salvar projeto (.json)', 'Save project (.json)') });
     saveBtn.addEventListener('click', function () {
@@ -1007,8 +1009,9 @@ MM.ui = (function () {
     { id: 'tab', pt: 'Aba e botões', en: 'Tab and buttons', group: 'interface' },
     { id: 'settings', pt: 'Configurações', en: 'Settings', group: 'interface' },
     { id: 'forum', pt: 'Fórum', en: 'Forum', group: 'advanced' },
-    { id: 'export', pt: 'Exportar', en: 'Export', group: 'export' },
-    { id: 'credits', pt: 'Créditos', en: 'Credits', group: 'export' }
+    { id: 'export', pt: 'Exportar', en: 'Export', group: 'advanced' },
+    { id: 'stats', pt: 'Estatísticas', en: 'Statistics', group: 'advanced' },
+    { id: 'credits', pt: 'Créditos', en: 'Credits', group: 'advanced' }
   ];
 
   var groupOrder = [
@@ -1023,11 +1026,15 @@ MM.ui = (function () {
 
   function sortOrder() {
     var idx = {};
+    var rank = { codes: 1, export: 2, forum: 3, stats: 4, credits: 5 };
     groupOrder.forEach(function (g, i) { idx[g.id] = i; });
     var tagged = order.map(function (o, i) { return { o: o, i: i }; });
     tagged.sort(function (a, b) {
       var d = idx[a.o.group] - idx[b.o.group];
-      return d || a.i - b.i;
+      if (d) return d;
+      var ra = a.o.group === 'advanced' ? (rank[a.o.id] || 0) : 0;
+      var rb = b.o.group === 'advanced' ? (rank[b.o.id] || 0) : 0;
+      return ra - rb || a.i - b.i;
     });
     var out = tagged.map(function (x) { return x.o; });
     order.length = 0;
@@ -1072,6 +1079,8 @@ MM.ui = (function () {
     var free = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: T('Projeto 100% gratuito', '100% free project') }));
     free.appendChild(h('p', { text: T('O Neo Mod Maker é totalmente gratuito, feito de fã para fã. Se alguém ou algum site pedir dinheiro para usá-lo, é golpe: não pague e não passe seus dados.', 'Neo Mod Maker is completely free, made by fans for fans. If anyone or any website asks for money to use it, it is a scam: do not pay and do not share your details.') }));
     panel.appendChild(free);
+    panel.appendChild(h('h3', { text: T('Privacidade', 'Privacy') }));
+    panel.appendChild(h('p', { text: T('O site conta visitas e exportações de forma anônima, sem cookies. O conteúdo dos seus mods nunca sai do navegador.', 'The site counts visits and exports anonymously, without cookies. The content of your mods never leaves the browser.') }));
     panel.appendChild(h('h3', { text: T('Ferramentas e fontes', 'Tools and fonts') }));
     var ul = h('ul', { class: 'credit-list' });
     [
