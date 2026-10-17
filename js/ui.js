@@ -1050,7 +1050,12 @@ MM.ui = (function () {
     ]));
     panel.appendChild(h('p', { text: T('Obrigado também a todas as outras pessoas que fizeram arte para os mods originais. Sem vocês, a biblioteca não existiria.', 'Thanks also to everyone else who made art for the original mods. Without you, the library would not exist.') }));
     panel.appendChild(h('p', { text: T('Os sprites da biblioteca são livres: use nos seus mods, de graça. Os marcados como feitos para o Neo Mod Maker foram criados por Claude com base no estilo deles.', 'The library sprites are free: use them in your mods at no cost. The ones marked as made for Neo Mod Maker were created by Claude based on their style.') }));
-    panel.appendChild(h('p', { text: T('Os visuais do site homenageiam os mods originais: Mod Maker 1 e 2, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles e Isekai.', 'The site themes pay tribute to the original mods: Mod Maker 1 and 2, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles and Isekai.') }));
+    panel.appendChild(h('p', { text: T('Os visuais do site homenageiam principalmente os mods originais: Mod Maker 1, 2 e 3, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles e Isekai.', 'The site themes mainly pay tribute to the original mods: Mod Maker 1, 2, and 3, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles and Isekai.') }));
+    panel.appendChild(h('h3', { text: 'Diversity Crate Mod' }));
+    panel.appendChild(person('Nikon', T('Modder', 'Modder'), []));
+    panel.appendChild(person('Cinericius', T('Artista dos sprites e das bandeiras da raça goblin', 'Goblin race sprites and banners artist'), []));
+    panel.appendChild(person('LoctuszOFC', T('Prédios da raça goblin e da raça lagarto', 'Goblin race buildings and Lizard race'), []));
+    panel.appendChild(h('p', { text: T('Criadores do Diversity Crate Mod, que permitiram adicionar os sprites do mod deles à biblioteca do Neo Mod Maker.', 'Creators of the Diversity Crate Mod, who allowed the sprites of their mod to be added to the Neo Mod Maker library.') }));
     panel.appendChild(h('h3', { text: T('Apoiadores oficiais', 'Official supporters') }));
     panel.appendChild(h('p', { text: T('Pessoas que apoiam o Neo Mod Maker. Obrigado por acreditarem no projeto.', 'People who support Neo Mod Maker. Thank you for believing in the project.') }));
     var sup = h('ul', { class: 'supporters' });
@@ -1067,6 +1072,12 @@ MM.ui = (function () {
       T('Fontes: Atkinson Hyperlegible, IBM Plex Mono e Pixelify Sans, via Google Fonts.', 'Fonts: Atkinson Hyperlegible, IBM Plex Mono and Pixelify Sans, via Google Fonts.')
     ].forEach(function (t) { ul.appendChild(h('li', { text: t })); });
     panel.appendChild(ul);
+    var legal = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: T('Direitos autorais', 'Copyright') }));
+    legal.appendChild(h('p', {}, h('strong', { text: 'WorldBox \u00a9 Maxim Karpenko / MakoMako' })));
+    legal.appendChild(h('p', { text: 'WorldBox sprites and assets are the property of their respective copyright holders and are used with permission for non-commercial modding purposes only.' }));
+    legal.appendChild(h('p', { text: 'Neo Mod Maker is an independent fan-made tool and is not affiliated with or endorsed by the WorldBox developers.' }));
+    legal.appendChild(h('p', {}, document.createTextNode('WorldBox: '), h('a', { href: 'https://www.superworldbox.com/', target: '_blank', rel: 'noopener noreferrer', text: 'https://www.superworldbox.com/' })));
+    panel.appendChild(legal);
     var help = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: T('Bugs, dúvidas e sugestões', 'Bugs, questions and suggestions') }));
     help.appendChild(h('p', { text: T('Para reportar qualquer bug, tirar dúvidas ou falar com a gente, entre no nosso Discord.', 'To report any bug, ask questions or talk to us, join our Discord.') }));
     help.appendChild(h('p', {}, h('a', { href: 'https://discord.gg/s3EbgNSsJW', target: '_blank', rel: 'noopener noreferrer', text: 'discord.gg/s3EbgNSsJW' })));

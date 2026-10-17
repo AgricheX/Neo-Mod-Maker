@@ -11,6 +11,8 @@ MM.libraryUI = (function () {
     ['banners', ['Bandeiras', 'Banners']],
     ['weapons', ['Armas', 'Weapons']],
     ['effects', ['Efeitos e projéteis', 'Effects and projectiles']],
+    ['traits', ['Traços e conquistas', 'Traits and achievements']],
+    ['tiles', ['Tiles do mundo', 'World tiles']],
     ['boats', ['Barcos', 'Boats']],
     ['tabs', ['Ícones de aba', 'Tab icons']],
     ['ui', ['Interface', 'Interface']],
@@ -32,6 +34,40 @@ MM.libraryUI = (function () {
     if (key === 'proj' || (key === 'img' && !size)) return ['effects', ''];
     if (key === 'unit') return ['creatures', ''];
     return ['made', ''];
+  }
+
+  var packQ = {};
+
+  function packCount(cat) {
+    return MM.library && MM.library.packs && MM.library.packs[cat] ? MM.library.packs[cat] : 0;
+  }
+
+  function packLoaded(cat) {
+    return !packCount(cat) || !!(MM.libExtra && MM.libExtra[cat]);
+  }
+
+  function loadPack(cat, cb) {
+    if (packLoaded(cat)) { cb(true); return; }
+    if (packQ[cat]) { packQ[cat].push(cb); return; }
+    packQ[cat] = [cb];
+    var sc = document.createElement('script');
+    function fin(ok) {
+      var q = packQ[cat] || [];
+      delete packQ[cat];
+      q.forEach(function (f) { f(ok); });
+    }
+    sc.onload = function () { fin(packLoaded(cat)); };
+    sc.onerror = function () { sc.remove(); fin(false); };
+    sc.src = 'js/lib/' + cat + '.js';
+    document.head.appendChild(sc);
+  }
+
+  function fullLib() {
+    var base = MM.library && MM.library.items ? MM.library.items : [];
+    var ex = MM.libExtra || {};
+    var out = base.slice();
+    Object.keys(ex).forEach(function (k) { out = out.concat(ex[k]); });
+    return out;
   }
 
   function src(it) { return 'data:image/png;base64,' + it[5]; }
@@ -100,7 +136,8 @@ MM.libraryUI = (function () {
     opts = opts || {};
     var animSlot = !!opts.anim;
     var onlyAnim = animSlot;
-    var lib = MM.library && MM.library.items ? MM.library.items : [];
+    var lib = fullLib();
+    var loading = false;
     var start = startCat(key, size);
     var cat = start[0];
     var group = start[1];
@@ -123,6 +160,19 @@ MM.libraryUI = (function () {
     overlay.addEventListener('pointerdown', function (e) { if (e.target === overlay) close(); });
 
     function inCat() { return lib.filter(function (it) { return it[0] === cat; }); }
+
+    function ensure(c, then) {
+      if (packLoaded(c)) { then(); return; }
+      loading = true;
+      info.textContent = T('Carregando...', 'Loading...');
+      grid.innerHTML = '';
+      loadPack(c, function (ok) {
+        loading = false;
+        lib = fullLib();
+        if (!ok) info.textContent = T('Não foi possível carregar esta categoria.', 'Could not load this category.');
+        then();
+      });
+    }
 
     function paintGroups() {
       var gs = [];
@@ -170,10 +220,10 @@ MM.libraryUI = (function () {
     function paintTabs() {
       tabs.innerHTML = '';
       CATS.forEach(function (c) {
-        var n = lib.filter(function (it) { return it[0] === c[0]; }).length;
+        var n = lib.filter(function (it) { return it[0] === c[0]; }).length + packCount(c[0]) * (packLoaded(c[0]) ? 0 : 1);
         if (!n) return;
         var b = h('button', { type: 'button', class: 'subtab' + (c[0] === cat ? ' on' : ''), text: T(c[1][0], c[1][1]) });
-        b.addEventListener('click', function () { cat = c[0]; group = ''; paintTabs(); paintGroups(); paintGrid(); });
+        b.addEventListener('click', function () { cat = c[0]; group = ''; paintTabs(); ensure(cat, function () { if (c[0] !== cat) return; paintGroups(); paintGrid(); }); });
         tabs.appendChild(b);
       });
     }
@@ -184,7 +234,7 @@ MM.libraryUI = (function () {
     closeBtn.addEventListener('click', close);
 
     win.appendChild(h('h2', { text: T('Biblioteca de sprites', 'Sprite library') }));
-    win.appendChild(h('p', { class: 'f-hint2', text: T('Sprites dos mods originais, livres para usar nos seus mods. Os marcados como feitos para o Neo Mod Maker foram criados com base no estilo deles.', 'Sprites from the original mods, free to use in your mods. The ones made for Neo Mod Maker were created based on their style.') }));
+    win.appendChild(h('p', { class: 'f-hint2', text: T('Sprites do WorldBox e dos mods originais, usados com permissão apenas para modding sem fins comerciais. Os feitos para o Neo Mod Maker foram criados com base no estilo deles.', "Sprites from the original mods and from WorldBox, used with permission for non-commercial modding. The ones made for Neo Mod Maker were created based on their style.") }));
     win.appendChild(tabs);
     win.appendChild(h('div', { class: 'lib-bar' }, groupSel, search, onlyLab, info));
     win.appendChild(grid);
@@ -192,8 +242,7 @@ MM.libraryUI = (function () {
     overlay.appendChild(win);
     document.body.appendChild(overlay);
     paintTabs();
-    paintGroups();
-    paintGrid();
+    ensure(cat, function () { paintGroups(); paintGrid(); });
   }
 
   return { open: open, pool: pool, random: random, fill: fill, isAnim: isAnim, frames: allFrames };

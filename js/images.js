@@ -204,11 +204,11 @@ MM.img = (function () {
       paint();
       if (onChange) onChange();
     });
+    wrap.appendChild(inp);
     info.appendChild(MM.h('div', { class: 'btn-row' }, pickBtn, libBtn, drawBtn, rndBtn, rmBtn));
     if (hint) info.appendChild(MM.h('span', { class: 'f-hint2', text: hint }));
     wrap.appendChild(prev);
     wrap.appendChild(info);
-    wrap.appendChild(inp);
     paint();
     return wrap;
   }

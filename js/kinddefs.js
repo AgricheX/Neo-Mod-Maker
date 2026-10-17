@@ -777,6 +777,16 @@
         w.push('g.vowels = NameGeneratorAsset.vowels_all;');
         w.push('g.consonants = NameGeneratorAsset.consonants_all;');
         tpls.forEach(function (t) { w.push('g.addTemplate(' + cs(t) + ');'); });
+        var clean = function (x) { return x.replace(/[\s;:|,]+/g, ''); };
+        var g0 = csv(starts).map(clean).filter(Boolean).join(' ');
+        var g1 = csv(ends).map(clean).filter(Boolean).join(' ');
+        var seen = {};
+        tpls.forEach(function (t) {
+          var code = t.split(',').map(function (tk) { return tk === 'special1' ? '0' : (tk === 'part' ? '1' : (tk === ' ' ? '_' : '')); }).join('');
+          if (!code || seen[code]) return;
+          seen[code] = 1;
+          w.push('g.addOnomastic(' + cs(code + '|0:' + g0 + ';1:' + g1) + ');');
+        });
         w.push('AssetManager.name_generator.add(g);');
         w.push('}');
       }

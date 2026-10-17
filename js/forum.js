@@ -19,6 +19,19 @@ MM.forum = (function () {
       tips: [['Comece pelo exemplo Wraith Hunt na página Mod para ver um mod completo funcionando.', 'Start with the Wraith Hunt example on the Mod page to see a complete working mod.']]
     },
     {
+      id: 'install', page: 'mod', sec: ['Começo', 'Getting started'], t: ['Instalando seu mod', 'Installing your mod'],
+      intro: ['Depois de baixar o .zip, o mod vai na pasta Mods do WorldBox. Você precisa ter o WorldBox e o NML (Neo Mod Loader) instalados.', 'After downloading the .zip, the mod goes in the WorldBox Mods folder. You need WorldBox and NML (Neo Mod Loader) installed.'],
+      f: [
+        [['O que você precisa', 'What you need'], ['WorldBox com o NML (Neo Mod Loader) instalado. É o NML que carrega os mods no jogo.', 'WorldBox with NML (Neo Mod Loader) installed. NML is what loads mods into the game.']],
+        [['Onde colocar', 'Where it goes'], ['Na Steam: clique com o botão direito em WorldBox, Gerenciar, Navegar pelos arquivos locais. Abra a pasta Mods e extraia o .zip dentro dela.', 'On Steam: right-click WorldBox, Manage, Browse local files. Open the Mods folder and extract the .zip inside it.']],
+        [['Confira as pastas', 'Check the folders'], ['A pasta do mod deve ficar direto dentro de Mods, com o mod.json dentro dela. Evite uma pasta dentro de outra com o mesmo nome.', 'The mod folder must sit directly inside Mods, with mod.json inside it. Avoid a folder inside a folder of the same name.']],
+        [['Ative', 'Turn it on'], ['Abra o WorldBox. O NML carrega o mod quando o jogo inicia e compila o código, então a primeira carga pode demorar um pouco.', 'Open WorldBox. NML loads the mod when the game starts and compiles its code, so the first load can take a moment.']],
+        [['Se não funcionar', 'If it does not work'], ['Confira se o NML está instalado e atualizado, se o .zip foi extraído e se o WorldBox está na versão mais recente. Tire os outros mods para testar o seu sozinho.', 'Check that NML is installed and up to date, the .zip was extracted, and you are on the latest WorldBox. Remove other mods to test yours alone.']],
+        [['Precisa de ajuda?', 'Need help?'], ['Entre no nosso Discord para reportar bugs ou tirar dúvidas. O link está na página Créditos.', 'Join our Discord to report bugs or ask questions. The link is on the Credits page.']]
+      ],
+      tips: [['Teste o mod sozinho primeiro: só o NML e o seu mod na pasta Mods.', 'Test your mod alone first: only NML and your mod in the Mods folder.']]
+    },
+    {
       id: 'mod', page: 'mod', sec: ['Começo', 'Getting started'], t: ['Dados do mod', 'Mod details'],
       intro: ['Informações que aparecem na lista de mods e que definem o nome do código.', 'Information shown in the mod list that also sets the code name.'],
       f: [
@@ -33,7 +46,7 @@ MM.forum = (function () {
       id: 'library', page: 'items', sec: ['Começo', 'Getting started'], t: ['Biblioteca de sprites e editor de pixel', 'Sprite library and pixel editor'],
       intro: ['Todo campo de imagem tem os botões Escolher imagem, Biblioteca, Desenhar e Aleatório. Você usa o que preferir.', 'Every image field has the buttons Choose image, Library, Draw and Random. Use whichever you prefer.'],
       f: [
-        [['Biblioteca', 'Library'], ['Abre os sprites dos mods originais: ícones, criaturas, prédios, bandeiras, armas, efeitos, barcos, ícones de mod e de aba. São livres para usar nos seus mods, de graça.', 'Opens the sprites from the original mods: icons, creatures, buildings, banners, weapons, effects, boats, mod icons and tab icons. They are free to use in your mods.']],
+        [['Biblioteca', 'Library'], ['Abre os sprites do WorldBox e dos mods originais: ícones, traços, criaturas, prédios, bandeiras, tiles, armas, efeitos, barcos, ícones de mod e de aba. Use nos seus mods de graça, apenas para modding sem fins comerciais.', "Opens the sprites from WorldBox and from the original mods: icons, traits, creatures, buildings, banners, tiles, weapons, effects, boats, mod icons and tab icons. Use them in your mods for free, for non-commercial modding only."]],
         [['Filtro automático', 'Automatic filter'], ['A biblioteca abre já na categoria do campo: o campo Moinho mostra moinhos, Bandeira: fundo mostra fundos de bandeira, Sprite da arma mostra armas.', 'The library opens already on the right category: the Windmill field shows windmills, Banner: background shows banner backgrounds, Weapon sprite shows weapons.']],
         [['Feitos para o Neo Mod Maker', 'Made for Neo Mod Maker'], ['Onde os mods originais não tinham sprites, foram criados ícones, bibliotecas, docas de pesca e ícones de aba no estilo deles.', 'Where the original mods had no sprites, icons, libraries, fishing docks and tab icons were made in their style.']],
         [['Ajuste de tamanho', 'Size fitting'], ['Ícones pequenos são ampliados em número inteiro de vezes para caber no tamanho sugerido do campo, sem borrar.', 'Small icons are enlarged by a whole number of times to fit the suggested size of the field, without blurring.']],
@@ -57,7 +70,7 @@ MM.forum = (function () {
       id: 'themes', page: 'mod', sec: ['Começo', 'Getting started'], t: ['Visuais e idiomas', 'Themes and languages'],
       intro: ['O site muda de visual e de idioma sem perder nada do seu projeto.', 'The site changes look and language without losing anything from your project.'],
       f: [
-        [['Visual', 'Theme'], ['No topo, o seletor Visual troca cores, banner e fundo animado. Há doze: Ocean of Souls, Mod Maker 1 e 2, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles, Isekai e Family Christmas. O botão com um olho, no canto inferior esquerdo, oculta a interface para você ver o fundo.', 'At the top, the Theme selector changes colors, banner and animated background. There are twelve: Ocean of Souls, Mod Maker 1 and 2, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles, Isekai and Family Christmas. The eye button in the bottom left corner hides the interface so you can see the background.']],
+        [['Visual', 'Theme'], ['No topo, o seletor Visual troca cores, banner e fundo animado. Há catorze: Ocean of Souls, Neo Mod Maker, Mod Maker 1, 2 e 3, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles, Isekai e Family Christmas. O botão com um olho, no canto inferior esquerdo, oculta a interface para você ver o fundo.', 'At the top, the Theme selector changes colors, banner and animated background. There are fourteen: Ocean of Souls, Neo Mod Maker, Mod Maker 1, 2 and 3, Monster Mod, FlagBox, Invasions, Nomes Brasileiros, One Piece, Magic Races, Naval Battles, Isekai and Family Christmas. The eye button in the bottom left corner hides the interface so you can see the background.']],
         [['Idioma', 'Language'], ['O site fala os 38 idiomas do WorldBox. As traduções foram feitas por IA e podem ter erros; textos novos podem aparecer em inglês até serem traduzidos.', 'The site speaks the 38 WorldBox languages. Translations were made by AI and may contain mistakes; new texts may show in English until translated.']],
         [['Sons', 'Sounds'], ['O botão Som liga e desliga os sons de clique.', 'The Sound button turns the click sounds on and off.']]
       ]
@@ -378,8 +391,7 @@ MM.forum = (function () {
       intro: ['Gera o mod final.', 'Builds the final mod.'],
       f: [
         [['Avisos', 'Warnings'], ['O número ao lado de Exportar conta problemas, como IDs repetidos ou campos obrigatórios vazios.', 'The number next to Export counts problems, like repeated IDs or empty required fields.']],
-        [['Reabrir', 'Reopening'], ['Na página Mod, solte o .zip exportado para continuar editando.', 'On the Mod page, drop the exported .zip to keep editing.']],
-        [['Limites', 'Limits'], ['Não cria sons, efeitos visuais novos, tipos de guerra, atributos novos, janelas nem sprites animados de criaturas.', 'Does not create sounds, new visual effects, war types, new stats, windows or animated creature sprites.']]
+        [['Reabrir', 'Reopening'], ['Na página Mod, solte o .zip exportado para continuar editando.', 'On the Mod page, drop the exported .zip to keep editing.']]
       ]
     }
   ];
