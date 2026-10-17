@@ -49,7 +49,7 @@ MM.img = (function () {
     slots(S).forEach(function (sl) {
       if (!sl.obj[sl.key]) return;
       if (!sl.fr) { out[folder + '/' + sl.path] = bytes(sl.obj[sl.key]); return; }
-      var f = MM.anim.frames(sl.obj, sl.key);
+      var f = sl.frames ? sl.frames() : MM.anim.frames(sl.obj, sl.key);
       f.forEach(function (u, i) { out[folder + '/' + sl.fr(i, f.length)] = bytes(u); });
     });
   }

@@ -731,10 +731,31 @@
     return out;
   }
 
+  function bodyCount(e, pre) {
+    var m = 0;
+    BODY_ROLES.forEach(function (r) { m = Math.max(m, MM.anim.count(e, pre + r[0])); });
+    return m;
+  }
+
+  function cycled(e, key, n) {
+    return function () {
+      var f = MM.anim.frames(e, key);
+      var out = [];
+      for (var i = 0; i < n; i++) out.push(f[i % f.length]);
+      return out;
+    };
+  }
+
   function bodySlots(e, out) {
     if (!e.ownBody) return;
     var base = 'GameResources/actors/species/civs/' + e.id + '/';
-    var swimAny = BODY_ROLES.some(function (r) { return MM.anim.count(e, 'bs_' + r[0]) > 0; });
+    var nw = bodyCount(e, 'bd_');
+    var ns = bodyCount(e, 'bs_');
+    var swimSrc = null;
+    if (ns) {
+      if (MM.anim.count(e, 'bs_male')) swimSrc = 'bs_male';
+      else BODY_ROLES.forEach(function (r) { if (!swimSrc && MM.anim.count(e, 'bs_' + r[0])) swimSrc = 'bs_' + r[0]; });
+    }
     BODY_ROLES.forEach(function (r) {
       r[2].forEach(function (folder, fi) {
         function seq(prefix) { return function (i) { return base + folder + '/' + prefix + i + '.png'; }; }
@@ -742,13 +763,20 @@
         var sw = seq('swim_');
         var ownW = MM.anim.count(e, 'bd_' + r[0]) > 0;
         var ownS = MM.anim.count(e, 'bs_' + r[0]) > 0;
-        out.push({ obj: e, key: 'bd_' + r[0], path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: fi > 0 });
-        out.push({ obj: e, key: 'bs_' + r[0], path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: fi > 0 });
-        if (!ownW && r[0] !== 'male') out.push({ obj: e, key: 'bd_male', path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: true });
-        if (!ownS) {
-          var fk = swimAny ? 'bs_male' : (ownW ? 'bd_' + r[0] : 'bd_male');
-          out.push({ obj: e, key: fk, path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: true });
+        var wKey = ownW ? 'bd_' + r[0] : 'bd_male';
+        var sKey = ownS ? 'bs_' + r[0] : (ns ? swimSrc : wKey);
+        var sCount = ns || nw;
+        if (!MM.anim.count(e, wKey) || !MM.anim.count(e, sKey)) {
+          if (ownW || ownS) {
+            if (ownW) out.push({ obj: e, key: wKey, path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: fi > 0 });
+            if (ownS) out.push({ obj: e, key: sKey, path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: fi > 0 });
+          }
+          return;
         }
+        out.push({ obj: e, key: 'bd_' + r[0], path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: fi > 0, frames: ownW ? cycled(e, wKey, nw) : null });
+        out.push({ obj: e, key: 'bs_' + r[0], path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: fi > 0, frames: ownS ? cycled(e, sKey, sCount) : null });
+        if (!ownW) out.push({ obj: e, key: wKey, path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: true, frames: cycled(e, wKey, nw) });
+        if (!ownS) out.push({ obj: e, key: sKey, path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: true, frames: cycled(e, sKey, sCount) });
       });
     });
   }
@@ -921,9 +949,9 @@
         w.push('t.build_order_template_id = "build_order_basic_2";');
       }
       if (banner) w.push('t.banner_id = ' + cs(id) + ';');
-      var nbw = MM.anim.count(e, 'bd_male');
+      var nbw = e.ownBody && MM.anim.count(e, 'bd_male') ? bodyCount(e, 'bd_') : 0;
       if (e.ownBody && nbw) {
-        var nbs = MM.anim.count(e, 'bs_male') || nbw;
+        var nbs = bodyCount(e, 'bs_') || nbw;
         var seqN = function (p, n) { var a = []; for (var i = 0; i < n; i++) a.push(cs(p + i)); return a.join(', '); };
         w.push('t.texture_id = ' + cs(id) + ';');
         w.push('t.animation_walk = new string[] { ' + seqN('walk_', nbw) + ' };');
@@ -997,18 +1025,7 @@
     validate: function (e, S, bad) {
       if (!e.base) bad('sem espécie base / no base species');
       if ((e.banBg && !e.banIcon) || (!e.banBg && e.banIcon)) bad('a bandeira precisa de fundo e símbolo juntos / banner needs both background and symbol');
-      if (e.ownBody) {
-        var nm = MM.anim.count(e, 'bd_male');
-        var sm = MM.anim.count(e, 'bs_male');
-        if (!nm) bad('corpo próprio precisa do macho andando / own bodies need the male walking body');
-        BODY_ROLES.forEach(function (r) {
-          var nw = MM.anim.count(e, 'bd_' + r[0]);
-          var ns = MM.anim.count(e, 'bs_' + r[0]);
-          if (nm && nw && nw !== nm) bad('quadros de ' + r[0] + ' andando diferem do macho / ' + r[0] + ' walking frames differ from male');
-          if (ns && !sm) bad('nadando precisa do macho nadando / swimming needs the male swimming body');
-          if (ns && sm && ns !== sm) bad('quadros de ' + r[0] + ' nadando diferem do macho / ' + r[0] + ' swimming frames differ from male');
-        });
-      }
+      if (e.ownBody && !MM.anim.count(e, 'bd_male')) bad('corpo próprio precisa do macho andando / own bodies need the male walking body');
       if ((csv(e.pStart).length === 0) !== (csv(e.pEnd).length === 0)) bad('nomes de pessoas precisam de começos e finais / people names need starts and ends');
       if ((csv(e.cStart).length === 0) !== (csv(e.cEnd).length === 0)) bad('nomes de cidades precisam de começos e finais / city names need starts and ends');
       if ((csv(e.mStart).length === 0) !== (csv(e.mEnd).length === 0)) bad('nomes de culturas precisam de começos e finais / culture names need starts and ends');
