@@ -32,6 +32,8 @@ MM.randomMod = function (keepLocales) {
 
   S.settings = [];
   var gen = { id: 'general', name: { en: 'General' } };
+  var GENERAL = { de: 'Allgemein', pl: 'Ogólne', cz: '常规', ch: '一般', ko: '일반', ja: '一般', th: 'ทั่วไป', vn: 'Chung', ru: 'Общие', ua: 'Загальні', by: 'Агульныя', es: 'General', br: 'Geral', pt: 'Geral', fr: 'Général', it: 'Generale', ro: 'General', hr: 'Općenito', tr: 'Genel', gr: 'Γενικά', ka: 'ზოგადი', sk: 'Všeobecné', cs: 'Obecné', hu: 'Általános', nl: 'Algemeen', id: 'Umum', sv: 'Allmänt', no: 'Generelt', da: 'Generelt', fa: 'عمومی', ar: 'عام', he: 'כללי', fn: 'Yleiset', ph: 'Pangkalahatan', hi: 'सामान्य', lb: 'Allgemeng', lt: 'Bendra' };
+  (S.locales || []).forEach(function (l) { if (l !== 'en') gen.name[l] = GENERAL[l] || gen.name.en; });
   S.settingGroups = [gen];
   var stypes = ['SWITCH', 'INT_SLIDER', 'SLIDER', 'TEXT'];
   many(stypes.length + R.int(0, 1), function (i) {
@@ -275,7 +277,7 @@ MM.randomMod = function (keepLocales) {
     setName(d, 'name', 'disaster');
     d.id = uidFor('disasters', d.name, 'disaster');
     d.log = { en: d.name.en + ' arrives!' };
-    (S.locales || []).forEach(function (l) { if (l === 'br') d.log.br = d.name.br + ' chega!'; });
+    (S.locales || []).forEach(function (l) { if (l !== 'en') d.log[l] = R.tr(l, 'log', d.name[l] || d.name.en) || d.log.en; });
     d.unit = R.pick(S.units).id;
     d.chance = R.num(0.1, 0.8, 0.05);
     d.minPop = R.pick([0, 100, 300, 600]);
@@ -406,7 +408,7 @@ MM.randomMod = function (keepLocales) {
     var b = MM.factories.button();
     b.id = MM.store.uid('buttons', 'spawn_' + u.id);
     b.name = { en: MM.nm(u.name) };
-    (S.locales || []).forEach(function (l) { if (l === 'br') b.name.br = u.name.br || MM.nm(u.name); });
+    (S.locales || []).forEach(function (l) { if (l !== 'en') b.name[l] = u.name[l] || b.name.en; });
     b.desc = R.desc('creature');
     b.unit = u.id;
     b.img = R.sprite(24, undefined, 'icon');

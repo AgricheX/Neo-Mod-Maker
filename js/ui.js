@@ -114,7 +114,7 @@ MM.ui = (function () {
         if (opts.onchange) opts.onchange(obj[key].en);
         if (opts.repaint) opts.repaint();
         else {
-          var holder = box.parentNode.parentNode;
+          var holder = box.parentNode;
           var fresh = F.i18n(label, obj, key, opts);
           holder.parentNode.replaceChild(fresh, holder);
         }
@@ -827,40 +827,48 @@ MM.ui = (function () {
     var root = h('div', { class: 'stack' });
     var panel = h('div', { class: 'panel form' });
     panel.appendChild(h('h2', { text: T('Exportar', 'Export') }));
-    var gaps = MM.check.run(S);
-    var warns = MM.gen.validate(S).filter(function (e) { return /ok se for do jogo/.test(e); });
-    if (gaps.length) {
-      var ul = h('ul', { class: 'errs gaps' });
-      gaps.forEach(function (g) {
-        var li = h('li', null, h('span', { text: MM.check.label(g) }));
-        var pg = MM.check.pageOf(g);
-        if (pg) {
-          var go = h('button', { type: 'button', class: 'btn tiny', text: T('Abrir', 'Open') });
-          go.addEventListener('click', function () {
-            if (g.key && g.idx >= 0) selected[g.key] = g.idx;
-            MM.app.go(pg);
-          });
-          li.appendChild(go);
-        }
-        ul.appendChild(li);
-      });
-      panel.appendChild(h('p', { class: 'note warn', text: T('Preencha estes campos para poder baixar o mod:', 'Fill in these fields to be able to download the mod:') }));
-      panel.appendChild(ul);
-    }
-    if (warns.length) {
-      var wl = h('ul', { class: 'errs' });
-      warns.forEach(function (e) { wl.appendChild(h('li', { text: e })); });
-      panel.appendChild(h('p', { class: 'note', text: T('Avisos (não impedem o download):', 'Warnings (do not block the download):') }));
-      panel.appendChild(wl);
+    var report = h('div', { class: 'export-report' });
+    panel.appendChild(report);
+    function paintReport(cur, gaps) {
+      report.innerHTML = '';
+      var warns = MM.gen.validate(cur).filter(function (e) { return /ok se for do jogo/.test(e); });
+      if (!MM.check.has(cur.meta.description)) warns.push(T('Descrição do mod vazia (opcional).', 'Mod description is empty (optional).'));
+      if (gaps.length) {
+        var ul = h('ul', { class: 'errs gaps' });
+        gaps.forEach(function (g) {
+          var li = h('li', null, h('span', { text: MM.check.label(g) }));
+          var pg = MM.check.pageOf(g);
+          if (pg) {
+            var go = h('button', { type: 'button', class: 'btn tiny', text: T('Abrir', 'Open') });
+            go.addEventListener('click', function () {
+              if (g.key && g.idx >= 0) selected[g.key] = g.idx;
+              MM.app.go(pg);
+            });
+            li.appendChild(go);
+          }
+          ul.appendChild(li);
+        });
+        report.appendChild(h('p', { class: 'note warn', text: T('Preencha estes campos para poder baixar o mod:', 'Fill in these fields to be able to download the mod:') }));
+        report.appendChild(ul);
+      }
+      if (warns.length) {
+        var wl = h('ul', { class: 'errs' });
+        warns.forEach(function (e) { wl.appendChild(h('li', { text: e })); });
+        report.appendChild(h('p', { class: 'note', text: T('Avisos (não impedem o download):', 'Warnings (do not block the download):') }));
+        report.appendChild(wl);
+      }
     }
     var row = h('div', { class: 'btn-row' });
     var zipBtn = h('button', { class: 'btn primary', type: 'button', text: T('Baixar mod (.zip)', 'Download mod (.zip)') });
-    if (gaps.length) {
-      zipBtn.disabled = true;
-      zipBtn.title = T('Preencha os campos da lista acima.', 'Fill in the fields listed above.');
-    }
     zipBtn.addEventListener('click', function () {
-      if (MM.check.run(MM.store.get()).length) { MM.toast(T('Preencha os campos da lista acima.', 'Fill in the fields listed above.')); return; }
+      var S = MM.store.get();
+      var gaps = MM.check.run(S);
+      paintReport(S, gaps);
+      if (gaps.length) {
+        MM.toast(T('Preencha os campos da lista acima.', 'Fill in the fields listed above.'));
+        report.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
       var files = MM.gen.build(S);
       var folder = MM.ident(S.meta.id);
       var out = {};

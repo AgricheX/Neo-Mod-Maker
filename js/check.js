@@ -24,6 +24,7 @@ MM.check = (function () {
     if (!has(S.meta.id)) miss('mod', null, -1, 'Mod', ['ID / namespace (sem espaços)', 'ID / namespace (no spaces)']);
 
     if (!has(S.meta.author)) miss('mod', null, -1, 'Mod', ['Autor', 'Author']);
+    if (!has(S.meta.version)) miss('mod', null, -1, 'Mod', ['Versão', 'Version']);
 
     each('traits', 'traits', function (e, m) {
       if (!has(e.name)) m(NAME);
@@ -115,5 +116,5 @@ MM.check = (function () {
     return S;
   }
 
-  return { run: run, label: label, pageOf: pageOf, autofill: autofill };
+  return { has: has, run: run, label: label, pageOf: pageOf, autofill: autofill };
 })();

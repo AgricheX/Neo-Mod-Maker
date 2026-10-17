@@ -110,10 +110,6 @@ MM.app = (function () {
       var key = MM.ui.counts[p.id];
       var cnt = typeof key === 'function' ? key(S) : (key && S[key] ? S[key].length : 0);
       if (cnt) b.appendChild(h('span', { class: 'count', text: String(cnt) }));
-      if (p.id === 'export') {
-        var n = MM.gen.validate(S).length;
-        if (n) b.appendChild(h('span', { class: 'count warn', text: String(n), title: T('Avisos antes de exportar', 'Warnings before exporting') }));
-      }
       b.addEventListener('click', function () {
         if (p.id === 'forum') MM.forum.open(page);
         go(p.id);

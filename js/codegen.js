@@ -479,8 +479,8 @@ MM.gen = (function () {
       function put(key, textObj, fallbackEmpty) {
         var v = textObj && textObj[lang];
         if (v === undefined || v === null || v === '') {
-          if (lang !== 'en') return;
-          v = '';
+          v = textObj && textObj.en;
+          if (v === undefined || v === null) v = '';
         }
         d[key] = v;
       }

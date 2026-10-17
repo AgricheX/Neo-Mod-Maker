@@ -390,7 +390,7 @@ MM.forum = (function () {
       id: 'export', page: 'export', sec: ['Avançado', 'Advanced'], t: ['Exportar e reabrir', 'Exporting and reopening'],
       intro: ['Gera o mod final.', 'Builds the final mod.'],
       f: [
-        [['Avisos', 'Warnings'], ['O número ao lado de Exportar conta problemas, como IDs repetidos ou campos obrigatórios vazios.', 'The number next to Export counts problems, like repeated IDs or empty required fields.']],
+        [['Avisos', 'Warnings'], ['Ao clicar em Baixar mod, o site confere o projeto e lista os problemas, como IDs repetidos ou campos obrigatórios vazios. O botão Abrir leva direto ao campo.', 'When you click Download mod, the site checks the project and lists any problems, like repeated IDs or empty required fields. The Open button takes you straight to the field.']],
         [['Reabrir', 'Reopening'], ['Na página Mod, solte o .zip exportado para continuar editando.', 'On the Mod page, drop the exported .zip to keep editing.']]
       ]
     }

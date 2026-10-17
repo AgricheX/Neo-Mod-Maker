@@ -80,28 +80,87 @@ MM.random = (function () {
     return res;
   }
 
+  var PLURAL = { Eyes: 1, Children: 1, Heirs: 1, Sworn: 1, Wardens: 1, Disciples: 1, Spores: 1, Wastes: 1, Fields: 1, Dunes: 1, Highlands: 1, Woods: 1, Boots: 1, Chronicles: 1 };
+
   function nameOnce(cat, extra) {
     var th = startItem();
     var n = cur.noun;
     var adj = pick(th.adj);
     if (cat === 'creature' || cat === 'species') {
       var c = personName(th);
-      return { en: c, pt: c };
+      return { en: c, pt: c, ref: { k: 'raw', t: c } };
     }
     if (cat === 'item') {
       var k = DATA.kinds[extra] || ['Relic', 'Relíquia', 'f'];
-      if (chance(0.5)) return { en: n[0] + ' ' + k[0], pt: k[1] + ' de ' + n[1] };
-      return { en: adj[0] + ' ' + k[0], pt: k[1] + ' ' + low(adjPt(adj, k[2])) };
+      if (chance(0.5) || PLURAL[k[0]]) return { en: n[0] + ' ' + k[0], pt: k[1] + ' de ' + n[1], ref: { k: 'nc', c: k[0], n: n[0] } };
+      return { en: adj[0] + ' ' + k[0], pt: k[1] + ' ' + low(adjPt(adj, k[2])), ref: { k: 'ac', c: k[0], a: adj[0] } };
     }
     var list = DATA.cat[cat] || DATA.cat.trait;
     var cn = pick(list);
-    if (cat === 'age') return { en: cn[0] + ' of ' + n[0], pt: cn[1] + ' ' + de(n) + n[1] };
-    if (cat === 'group') return { en: cn[0] + ' of ' + n[0], pt: cn[1] + ' ' + de(n) + n[1] };
-    if (cat === 'button') return { en: cn[0] + ' ' + n[0], pt: cn[1] + ' ' + de(n) + n[1] };
+    if (cat === 'age' || cat === 'group') return { en: cn[0] + ' of ' + n[0], pt: cn[1] + ' ' + de(n) + n[1], ref: { k: 'cn', c: cn[0], n: n[0] } };
+    if (cat === 'button') return { en: cn[0] + ' ' + n[0], pt: cn[1] + ' ' + de(n) + n[1], ref: { k: 'b', n: n[0] } };
     var p = r();
-    if (p < 0.34) return { en: n[0] + ' ' + cn[0], pt: cn[1] + ' de ' + n[1] };
-    if (p < 0.67) return { en: adj[0] + ' ' + cn[0], pt: cn[1] + ' ' + low(adjPt(adj, cn[2])) };
-    return { en: cn[0] + ' of ' + n[0], pt: cn[1] + ' ' + de(n) + n[1] };
+    if (p < 0.34) return { en: n[0] + ' ' + cn[0], pt: cn[1] + ' de ' + n[1], ref: { k: 'nc', c: cn[0], n: n[0] } };
+    if (p < 0.67 && !PLURAL[cn[0]]) return { en: adj[0] + ' ' + cn[0], pt: cn[1] + ' ' + low(adjPt(adj, cn[2])), ref: { k: 'ac', c: cn[0], a: adj[0] } };
+    return { en: cn[0] + ' of ' + n[0], pt: cn[1] + ' ' + de(n) + n[1], ref: { k: 'cn', c: cn[0], n: n[0] } };
+  }
+
+  function capFirst(s, lang) {
+    if (!s) return s;
+    var f = s.charAt(0);
+    try { f = f.toLocaleUpperCase(lang === 'tr' ? 'tr' : undefined); } catch (e) { f = f.toUpperCase(); }
+    return f + s.slice(1);
+  }
+
+  function nounForm(L, e) { return e[0]; }
+  function ofForm(L, e) {
+    if (e[1]) return e[1];
+    if (L.Q) {
+      if (L.Q[1] && /^[aeiouyhàâäáéèêëíîïóôöúùûüœæ]/i.test(e[0])) return L.Q[1] + e[0];
+      return L.Q[0] + e[0];
+    }
+    return e[0];
+  }
+  function headForm(e) { return e[2] || e[0]; }
+  function pickTpl(t, g) {
+    var a = t.split('\u00a6');
+    return a[g] || a[0];
+  }
+
+  function localized(lang, ref) {
+    var L = window.MM && MM.randloc && MM.randloc[lang];
+    if (!L || !ref) return null;
+    var s = null;
+    var c = ref.c ? L.N[ref.c] : null;
+    var n = ref.n ? L.N[ref.n] : null;
+    if (ref.k === 'raw') return ref.t;
+    if (ref.k === 'nc' || ref.k === 'cn') {
+      if (!c || !n) return null;
+      s = pickTpl(L.P[0], c[3] | 0).replace('{c}', headForm(c)).replace('{o}', ofForm(L, n));
+    } else if (ref.k === 'ac') {
+      var a = L.A[ref.a];
+      if (!c || !a) return null;
+      s = pickTpl(L.P[1], c[3] | 0).replace('{c}', headForm(c)).replace('{a}', a[c[3] | 0] || a[0]);
+    } else if (ref.k === 'b') {
+      if (!n) return null;
+      s = L.P[2].replace('{n}', n[0]).replace('{o}', ofForm(L, n));
+    }
+    return s ? capFirst(s, lang) : null;
+  }
+
+  function localizedDesc(lang, id, noun) {
+    var L = window.MM && MM.randloc && MM.randloc[lang];
+    if (!L || !L.D[id]) return null;
+    var n = L.N[noun];
+    if (!n) return null;
+    return L.D[id].replace(/\{n\}/g, n[0]).replace(/\{o\}/g, ofForm(L, n));
+  }
+
+  function tr(lang, id, text) {
+    if (lang === 'br' || lang === 'pt') return id === 'log' ? text + ' chega!' : text;
+    var L = window.MM && MM.randloc && MM.randloc[lang];
+    if (!L || !L.D[id]) return null;
+    return L.D[id].replace('{t}', text);
   }
 
   function themeFor(nameObj) {
@@ -122,7 +181,9 @@ MM.random = (function () {
     var nm = name(cat, extra);
     var o = { en: nm.en };
     (S.locales || []).forEach(function (l) {
-      if (l === 'br') o.br = nm.pt;
+      if (l === 'en') return;
+      if (l === 'br' || l === 'pt') o[l] = nm.pt;
+      else o[l] = localized(l, nm.ref) || nm.en;
     });
     obj[key] = o;
     return nm;
@@ -139,7 +200,10 @@ MM.random = (function () {
     var th = theme();
     var n = cur.noun || (cur.noun = pick(th.nouns));
     var pool = (DATA.desc[cat] || []).concat(DATA.desc.any);
-    var o = fillTpl(pick(pool), n);
+    var t = pick(pool);
+    var o = fillTpl(t, n);
+    o.id = t.id;
+    o.noun = n[0];
     return o;
   }
 
@@ -147,9 +211,17 @@ MM.random = (function () {
     var d = descText(cat);
     var S = MM.store.get();
     var o = { en: d.en };
-    if ((S.locales || []).indexOf('br') >= 0) o.br = d.pt;
+    (S.locales || []).forEach(function (l) {
+      if (l === 'en') return;
+      if (l === 'br' || l === 'pt') o[l] = d.pt;
+      else o[l] = localizedDesc(l, d.id, d.noun) || d.en;
+    });
     return o;
   }
+
+  Object.keys(DATA.desc).forEach(function (k) {
+    DATA.desc[k].forEach(function (t, i) { t.id = k + '.' + i; });
+  });
 
   var STAT_RANGE = {
     health: [30, 400, 10], damage: [1, 35, 1], armor: [1, 12, 1], speed: [3, 40, 1], attack_speed: [0.2, 2, 0.1], range: [1, 12, 1],
@@ -267,5 +339,5 @@ MM.random = (function () {
     return cv.toDataURL('image/png');
   }
 
-  return { int: int, pick: pick, chance: chance, shuffle: shuffle, sample: sample, name: name, fill: fill, desc: desc, lock: lock, themeFor: themeFor, theme: theme, startItem: startItem, setTheme: setTheme, themes: function () { return DATA.themes; }, themeById: themeById, syllables: syllables, personName: personName, noun: function () { return cur.noun; }, adj: function () { return pick(theme().adj); }, stats: stats, statValue: statValue, color: color, sprite: sprite, num: function (a, b, step) { var v = a + r() * (b - a); step = step || 1; return Number((Math.round(v / step) * step).toFixed(4)); } };
+  return { int: int, pick: pick, chance: chance, shuffle: shuffle, sample: sample, name: name, fill: fill, desc: desc, tr: tr, lock: lock, themeFor: themeFor, theme: theme, startItem: startItem, setTheme: setTheme, themes: function () { return DATA.themes; }, themeById: themeById, syllables: syllables, personName: personName, noun: function () { return cur.noun; }, adj: function () { return pick(theme().adj); }, stats: stats, statValue: statValue, color: color, sprite: sprite, num: function (a, b, step) { var v = a + r() * (b - a); step = step || 1; return Number((Math.round(v / step) * step).toFixed(4)); } };
 })();
