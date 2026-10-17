@@ -97,6 +97,8 @@ MM.num = function (n) {
 MM.int = function (n) {
   var v = Math.round(Number(n));
   if (!isFinite(v)) v = 0;
+  if (v > 2147483647) v = 2147483647;
+  if (v < -2147483648) v = -2147483648;
   return String(v);
 };
 

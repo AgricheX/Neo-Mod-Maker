@@ -26,7 +26,7 @@ MM.libraryUI = (function () {
     if (key === 'banBg') return ['banners', 'Banner backgrounds'];
     if (key === 'banIcon') return ['banners', 'Banner symbols'];
     if (key === 'imgSprite') return ['weapons', ''];
-    if (key === 'body' || key === 'bodySwim') return ['creatures', ''];
+    if (key === 'body' || key === 'bodySwim' || /^b[ds]_/.test(key)) return ['creatures', ''];
     if (key === 'slashImg') return ['effects', 'slashes'];
     if (key === 'fxImg') return ['effects', 'Effects'];
     if (size === '200x200') return ['mods', ''];
@@ -73,6 +73,12 @@ MM.libraryUI = (function () {
   function src(it) { return 'data:image/png;base64,' + it[5]; }
 
   function isAnim(it) { return !!(it[7] && it[7].length); }
+
+  function swimFrames(it) {
+    return it[8] && it[8].length ? it[8].map(function (b) { return 'data:image/png;base64,' + b; }) : null;
+  }
+
+  function isSwimKey(key) { return key === 'bodySwim' || /^bs_/.test(key); }
 
   function allFrames(it) {
     var a = [src(it)];
@@ -214,15 +220,27 @@ MM.libraryUI = (function () {
         MM.anim.attach(timg, allFrames(it), it[6] || 6);
         var box = h('span', { class: 'lib-thumb' }, timg);
         if (isAnim(it)) b.appendChild(h('span', { class: 'lib-badge', text: it[7].length + 1 + 'f' }));
+        var sw = swimFrames(it);
         var big = Math.max(it[3], it[4]);
         var sc = big >= 64 ? 1 : Math.max(1, Math.floor(64 / big));
+        if (sw) sc = Math.max(1, Math.floor(sc / 1.6));
         box.firstChild.style.width = it[3] * sc + 'px';
-        box.firstChild.style.height = it[4] * sc + 'px';
+        if (!sw) box.firstChild.style.height = it[4] * sc + 'px';
+        if (sw) {
+          box.classList.add('two');
+          var simg = h('img', { alt: '', class: 'lib-swim' });
+          MM.anim.attach(simg, sw, it[6] || 6);
+          var sim = new Image();
+          sim.onload = function () { simg.style.width = sim.width * sc + 'px'; };
+          sim.src = sw[0];
+          box.appendChild(simg);
+          b.appendChild(h('span', { class: 'lib-badge lib-badge2', text: T('anda + nada', 'walk + swim') }));
+        }
         b.appendChild(box);
         b.appendChild(h('span', { class: 'lib-name', text: it[2] }));
         b.addEventListener('click', function () {
           if (isAnim(it)) {
-            var fr = allFrames(it);
+            var fr = (isSwimKey(key) && swimFrames(it)) || allFrames(it);
             done(fr[0], animSlot ? fr.slice(1) : [], it[6] || 6);
             close();
             return;

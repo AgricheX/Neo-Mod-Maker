@@ -680,7 +680,13 @@ MM.ui = (function () {
           });
         }
         host.appendChild(F.text(T('Nome', 'Name'), a, 'name', { onchange: refresh }));
-        host.appendChild(F.select(T('Quando dispara', 'Trigger'), a, 'hook', F.opts(D.actionHooks), function () { }));
+        host.appendChild(F.select(T('Quando dispara', 'Trigger'), a, 'hook', F.opts(D.actionHooks), function () {
+          var n = MM.gen.releaseAction(S, a);
+          if (n) {
+            MM.store.save();
+            MM.toast(T('Esta ação foi solta de ' + n + ' campo(s) que não aceitam esse gatilho.', 'This action was removed from ' + n + ' field(s) that do not accept this trigger.'));
+          }
+        }));
         host.appendChild(F.select(T('Efeito', 'Effect type'), a, 'preset', F.opts(D.actionPresets), paintDyn));
         host.appendChild(dlistLaw(S, a));
         host.appendChild(F.number(T('Chance (%)', 'Chance (%)'), a, 'chance', { min: 0, max: 100 }));

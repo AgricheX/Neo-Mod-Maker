@@ -706,6 +706,53 @@
     ['barracks', 'order_barracks', ['Quartel', 'Barracks'], 'barracks_{x}']
   ];
 
+  var BODY_ROLES = [
+    ['male', ['Macho', 'Male'], ['male_1', 'main']],
+    ['female', ['Fêmea', 'Female'], ['female_1']],
+    ['warrior', ['Guerreiro', 'Warrior'], ['warrior_1']],
+    ['king', ['Rei', 'King'], ['king']],
+    ['leader', ['Líder', 'Leader'], ['leader']],
+    ['child', ['Criança', 'Child'], ['child']],
+    ['zombie', ['Zumbi', 'Zombie'], ['zombie']]
+  ];
+
+  function bodyFields() {
+    var out = [
+      { t: 'h', l: ['Corpos próprios', 'Own bodies'] },
+      { k: 'bodyNote', t: 'note', l: ['Ligue para desenhar o corpo de cada papel. O macho é obrigatório; papéis vazios usam o corpo do macho. Todos os papéis precisam ter o mesmo número de quadros.', 'Turn on to draw the body of each role. Male is required; empty roles use the male body. All roles need the same number of frames.'] },
+      { k: 'ownBody', t: 'bool', l: ['Usar corpos próprios', 'Use own bodies'], d: false, rerender: true }
+    ];
+    [['bd_', ['Corpos andando', 'Walking bodies']], ['bs_', ['Corpos nadando (opcional)', 'Swimming bodies (optional)']]].forEach(function (g) {
+      out.push({ t: 'h', l: g[1], when: function (e) { return e.ownBody; } });
+      BODY_ROLES.forEach(function (r) {
+        out.push({ k: g[0] + r[0], t: 'img', anim: true, norandom: true, l: r[1], size: '', when: function (e) { return e.ownBody; } });
+      });
+    });
+    return out;
+  }
+
+  function bodySlots(e, out) {
+    if (!e.ownBody) return;
+    var base = 'GameResources/actors/species/civs/' + e.id + '/';
+    var swimAny = BODY_ROLES.some(function (r) { return MM.anim.count(e, 'bs_' + r[0]) > 0; });
+    BODY_ROLES.forEach(function (r) {
+      r[2].forEach(function (folder, fi) {
+        function seq(prefix) { return function (i) { return base + folder + '/' + prefix + i + '.png'; }; }
+        var wk = seq('walk_');
+        var sw = seq('swim_');
+        var ownW = MM.anim.count(e, 'bd_' + r[0]) > 0;
+        var ownS = MM.anim.count(e, 'bs_' + r[0]) > 0;
+        out.push({ obj: e, key: 'bd_' + r[0], path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: fi > 0 });
+        out.push({ obj: e, key: 'bs_' + r[0], path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: fi > 0 });
+        if (!ownW && r[0] !== 'male') out.push({ obj: e, key: 'bd_male', path: wk(0), fr: wk, label: 'Body ' + r[0] + ' walk ' + e.id, size: '', mirror: true });
+        if (!ownS) {
+          var fk = swimAny ? 'bs_male' : (ownW ? 'bd_' + r[0] : 'bd_male');
+          out.push({ obj: e, key: fk, path: sw(0), fr: sw, label: 'Body ' + r[0] + ' swim ' + e.id, size: '', mirror: true });
+        }
+      });
+    });
+  }
+
   function csv(txt) {
     return String(txt || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
   }
@@ -743,7 +790,8 @@
     return { k: 'b_' + b[0], t: 'img', anim: true, l: b[2], size: '32x32', px: 24, when: function (e) { return e.ownStyle; } };
   })).concat([
     { k: 'banBg', t: 'img', l: ['Bandeira: fundo', 'Banner: background'], size: '32x32', px: 16 },
-    { k: 'banIcon', t: 'img', l: ['Bandeira: símbolo', 'Banner: symbol'], size: '32x32', px: 16 },
+    { k: 'banIcon', t: 'img', l: ['Bandeira: símbolo', 'Banner: symbol'], size: '32x32', px: 16 }
+  ]).concat(bodyFields()).concat([
     { t: 'h', l: ['Traços padrão (somados aos da espécie base)', 'Default traits (added on top of the base species ones)'] },
     { k: 'traits', t: 'ids', src: ['traits'], l: ['Traços de criatura', 'Creature traits'], rn: 3 },
     { k: 'subTraits', t: 'ids', src: ['subTraits'], l: ['Traços de subespécie extras', 'Extra subspecies traits'], rn: 3 },
@@ -873,6 +921,19 @@
         w.push('t.build_order_template_id = "build_order_basic_2";');
       }
       if (banner) w.push('t.banner_id = ' + cs(id) + ';');
+      var nbw = MM.anim.count(e, 'bd_male');
+      if (e.ownBody && nbw) {
+        var nbs = MM.anim.count(e, 'bs_male') || nbw;
+        var seqN = function (p, n) { var a = []; for (var i = 0; i < n; i++) a.push(cs(p + i)); return a.join(', '); };
+        w.push('t.texture_id = ' + cs(id) + ';');
+        w.push('t.animation_walk = new string[] { ' + seqN('walk_', nbw) + ' };');
+        w.push('t.animation_swim = new string[] { ' + seqN('swim_', nbs) + ' };');
+        w.push('t.animation_walk_speed = ' + c.num(MM.anim.fpsOf(e, 'bd_male')) + ';');
+        w.push('t.has_advanced_textures = false;');
+        w.push('t.render_heads_for_babies = false;');
+        w.push('t.texture_asset = null;');
+        w.push('AssetManager.actor_library.loadTexturesAndSprites(t);');
+      }
       if (ownNames || placeNames || metaNames) w.push('t.name_template_sets = new string[] { ' + cs(id + '_set') + ' };');
       if (e.color) w.push('t.color_hex = ' + cs(e.color) + ';');
       w.push('t.icon = ' + cs(e.img ? 'species_' + id : BASE_ICON[base].replace('ui/Icons/', '')) + ';');
@@ -917,6 +978,7 @@
           });
         });
       }
+      bodySlots(e, out);
       out.push({ obj: e, key: 'banBg', path: 'GameResources/banners_kingdoms/' + e.id + '/background/0.png', label: 'Banner background ' + e.id, size: '32x32' });
       out.push({ obj: e, key: 'banIcon', path: 'GameResources/banners_kingdoms/' + e.id + '/icon/0.png', label: 'Banner icon ' + e.id, size: '32x32' });
       return out;
@@ -935,6 +997,18 @@
     validate: function (e, S, bad) {
       if (!e.base) bad('sem espécie base / no base species');
       if ((e.banBg && !e.banIcon) || (!e.banBg && e.banIcon)) bad('a bandeira precisa de fundo e símbolo juntos / banner needs both background and symbol');
+      if (e.ownBody) {
+        var nm = MM.anim.count(e, 'bd_male');
+        var sm = MM.anim.count(e, 'bs_male');
+        if (!nm) bad('corpo próprio precisa do macho andando / own bodies need the male walking body');
+        BODY_ROLES.forEach(function (r) {
+          var nw = MM.anim.count(e, 'bd_' + r[0]);
+          var ns = MM.anim.count(e, 'bs_' + r[0]);
+          if (nm && nw && nw !== nm) bad('quadros de ' + r[0] + ' andando diferem do macho / ' + r[0] + ' walking frames differ from male');
+          if (ns && !sm) bad('nadando precisa do macho nadando / swimming needs the male swimming body');
+          if (ns && sm && ns !== sm) bad('quadros de ' + r[0] + ' nadando diferem do macho / ' + r[0] + ' swimming frames differ from male');
+        });
+      }
       if ((csv(e.pStart).length === 0) !== (csv(e.pEnd).length === 0)) bad('nomes de pessoas precisam de começos e finais / people names need starts and ends');
       if ((csv(e.cStart).length === 0) !== (csv(e.cEnd).length === 0)) bad('nomes de cidades precisam de começos e finais / city names need starts and ends');
       if ((csv(e.mStart).length === 0) !== (csv(e.mEnd).length === 0)) bad('nomes de culturas precisam de começos e finais / culture names need starts and ends');

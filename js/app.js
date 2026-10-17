@@ -100,11 +100,32 @@ MM.app = (function () {
     nav.innerHTML = '';
     var S = MM.store.get();
     var lastGroup = null;
+    var chips = h('div', { class: 'nav-groups' });
+    var items = [];
+    var chipEls = {};
+    var totals = {};
+    var curGroup = '';
+    MM.ui.order.forEach(function (p) { if (p.id === page) curGroup = MM.ui.groups.filter(function (g) { return g.id === p.group && MM.L(g); }).length ? p.group : ''; });
+
+    function setActive(g) {
+      items.forEach(function (it) { it.el.classList.toggle('m-off', it.g !== g); });
+      Object.keys(chipEls).forEach(function (k) { chipEls[k].classList.toggle('on', k === g); });
+    }
+
+    var modItem = null;
     MM.ui.order.forEach(function (p) {
+      var gd = MM.ui.groups.filter(function (g) { return g.id === p.group; })[0];
+      var named = !!(gd && MM.L(gd));
       if (p.group !== lastGroup) {
         lastGroup = p.group;
-        var gd = MM.ui.groups.filter(function (g) { return g.id === p.group; })[0];
-        if (gd && MM.L(gd)) nav.appendChild(h('div', { class: 'nav-head', text: MM.L(gd) }));
+        if (named) {
+          nav.appendChild(h('div', { class: 'nav-head', text: MM.L(gd) }));
+          var chip = h('button', { type: 'button', class: 'nav-chip' });
+          chip.addEventListener('click', function () { setActive(p.group); });
+          chipEls[p.group] = chip;
+          chip.textContent = MM.L(gd);
+          chips.appendChild(chip);
+        }
       }
       var b = h('button', { class: 'nav-item' + (p.id === page ? ' on' : ''), type: 'button' }, MM.icons.el(p.id), h('span', { class: 'nav-label', text: MM.L(p) }));
       var key = MM.ui.counts[p.id];
@@ -114,8 +135,27 @@ MM.app = (function () {
         if (p.id === 'forum') MM.forum.open(page);
         go(p.id);
       });
+      if (named) {
+        totals[p.group] = (totals[p.group] || 0) + cnt;
+        items.push({ el: b, g: p.group });
+      } else {
+        items.push({ el: b, g: '__mod' });
+        b.classList.add('nav-solo');
+        modItem = b;
+      }
       nav.appendChild(b);
     });
+    Object.keys(chipEls).forEach(function (k) {
+      if (totals[k]) chipEls[k].appendChild(h('span', { class: 'count', text: String(totals[k]) }));
+    });
+    if (modItem) {
+      var modChip = h('button', { type: 'button', class: 'nav-chip' + (page === 'mod' || !MM.ui.screens[page] ? ' on' : ''), text: modItem.textContent.replace(/\d+$/, '') });
+      modChip.addEventListener('click', function () { go('mod'); });
+      chips.insertBefore(modChip, chips.firstChild);
+    }
+    nav.insertBefore(chips, nav.firstChild);
+    setActive(curGroup);
+    if (page === 'mod' || !curGroup) Object.keys(chipEls).forEach(function (k) { chipEls[k].classList.remove('on'); });
   }
 
   function renderMain() {

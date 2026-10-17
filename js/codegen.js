@@ -16,6 +16,38 @@ MM.gen = (function () {
     return actionById(S, id) ? 'Actions.A_' + id : null;
   }
 
+  var TRAIT_HOOKS = { attack: 'attack', hit: 'hit', death: 'world', special: 'world', growth: 'world', birth: 'world' };
+
+  function actionSlots(S) {
+    var out = [];
+    S.traits.forEach(function (t) {
+      Object.keys(TRAIT_HOOKS).forEach(function (k) {
+        if (t.act) out.push({ title: 'trait ' + t.id, obj: t.act, key: k, hook: TRAIT_HOOKS[k] });
+      });
+    });
+    S.items.forEach(function (it) {
+      out.push({ title: 'item ' + it.id, obj: it, key: 'actAttack', hook: 'attack' });
+      out.push({ title: 'item ' + it.id, obj: it, key: 'actSpecial', hook: 'world' });
+    });
+    S.units.forEach(function (u) { out.push({ title: 'unit ' + u.id, obj: u, key: 'actHit', hook: 'hit' }); });
+    (MM.kinds.defs || []).forEach(function (def) {
+      (S[def.key] || []).forEach(function (e) {
+        def.fields.forEach(function (f) {
+          if (f.t === 'act') out.push({ title: def.key + ' ' + e.id, obj: e, key: f.k, hook: f.hook });
+        });
+      });
+    });
+    return out;
+  }
+
+  function releaseAction(S, a) {
+    var n = 0;
+    actionSlots(S).forEach(function (sl) {
+      if (sl.obj[sl.key] === a.id && sl.hook !== a.hook) { sl.obj[sl.key] = ''; n++; }
+    });
+    return n;
+  }
+
   function statLines(varName, stats, indent) {
     var out = [];
     Object.keys(stats || {}).forEach(function (k) {
@@ -579,6 +611,12 @@ MM.gen = (function () {
     S.buttons.forEach(function (b) {
       if (!b.unit) errs.push('button ' + b.id + ': sem unidade / no unit');
     });
+    actionSlots(S).forEach(function (sl) {
+      var id = sl.obj[sl.key];
+      if (!id) return;
+      var a = actionById(S, id);
+      if (a && a.hook !== sl.hook) errs.push(sl.title + ': a ação ' + id + ' tem outro gatilho e não encaixa neste campo (' + sl.key + ') / action ' + id + ' has a different trigger and does not fit this field (' + sl.key + ')');
+    });
     MM.kinds.validate(S, errs);
     return errs;
   }
@@ -727,5 +765,5 @@ MM.gen = (function () {
     return files;
   }
 
-  return { build: build, validate: validate, itemFullId: itemFullId, tplOf: tplOf, unitFolder: unitFolder };
+  return { build: build, validate: validate, actionSlots: actionSlots, releaseAction: releaseAction, itemFullId: itemFullId, tplOf: tplOf, unitFolder: unitFolder };
 })();
