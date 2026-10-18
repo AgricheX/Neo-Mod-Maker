@@ -1,0 +1,33 @@
+:root[data-theme="united-federation"] {
+  --bg-0: #040e22;
+  --bg-1: #0b2a5a;
+  --panel: rgba(5, 17, 40, 0.96);
+  --panel-2: rgba(70, 14, 24, 0.9);
+  --line: #fdc10f;
+  --line-dark: #020813;
+  --ink: #f8f4ea;
+  --ink-dim: #c9d4ea;
+  --accent: #fdc10f;
+  --accent-ink: #1a1200;
+  --accent-2: #2fa365;
+  --danger: #ff6f7c;
+  --ok: #6fdc98;
+  --line-rgb: 253, 193, 15;
+  --accent-rgb: 253, 193, 15;
+  --shade-rgb: 2, 8, 19;
+  --card: rgba(12, 52, 40, 0.86);
+  --btn-1: #1a8a4e;
+  --btn-2: #0f6a39;
+  --btn-h1: #22a05c;
+  --btn-h2: #138046;
+  --field: #030c1d;
+  --field-2: #020816;
+  --ink-faint: #7f93b8;
+  --acc-hi: #ffd95a;
+  --acc-lo: #e0a800;
+  --acc-hi2: #ffe58a;
+  --acc-lo2: #f5c632;
+  --title-1: #c4161f;
+  --title-2: #7a0c14;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

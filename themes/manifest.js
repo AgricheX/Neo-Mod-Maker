@@ -1,1 +1,1 @@
-MM.themeManifest = ['ocean-of-souls', 'neo-mod-maker', 'mod-maker-1', 'mod-maker-2', 'mod-maker-3', 'monster-mod', 'flagbox', 'invasions', 'nomes-brasileiros', 'one-piece', 'magic-races', 'naval-battle', 'isekai', 'family-christmas'];
+MM.themeManifest = ['ocean-of-souls', 'neo-mod-maker', 'mod-maker-1', 'mod-maker-2', 'mod-maker-3', 'monster-mod', 'flagbox', 'invasions', 'nomes-brasileiros', 'one-piece', 'magic-races', 'naval-battle', 'isekai', 'family-christmas', 'united-federation'];

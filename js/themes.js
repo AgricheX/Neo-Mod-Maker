@@ -4,7 +4,7 @@ MM.themes = (function () {
 
   function register(t) { registry[t.id] = t; }
 
-  var ORDER = ['ocean-of-souls', 'neo-mod-maker', 'mod-maker-1', 'mod-maker-2', 'mod-maker-3', 'monster-mod', 'flagbox', 'invasions', 'nomes-brasileiros', 'one-piece', 'magic-races', 'naval-battle', 'isekai', 'family-christmas'];
+  var ORDER = ['ocean-of-souls', 'neo-mod-maker', 'mod-maker-1', 'mod-maker-2', 'mod-maker-3', 'monster-mod', 'flagbox', 'invasions', 'nomes-brasileiros', 'one-piece', 'magic-races', 'naval-battle', 'isekai', 'family-christmas', 'united-federation'];
 
   function rank(id) {
     var i = ORDER.indexOf(id);
