@@ -133,11 +133,16 @@
       if (e.randomFrame) w.push('d.random_frame = true;');
       if (e.animated || MM.anim.count(e, 'img') > 1) w.push('d.animated = true;');
       if (e.randomFlip) w.push('d.random_flip = true;');
-      if (e.type === 'DropBuilding' && e.building) w.push('d.building_asset = ' + c.cs(e.building) + ';');
+      var bld = e.type === 'DropBuilding' && e.building;
+      if (bld) w.push('d.building_asset = ' + c.cs(e.building) + ';');
+      var plain = !(e.effect === 'status' && e.status) && !(e.effect === 'action' && e.action && c.act(e.action)) && !(e.effect === 'spawn' && e.unit);
+      if (bld && plain) w.push('d.action_landed = DropsLibrary.action_spawn_building;');
+      var land = bld ? '\tDropsLibrary.action_spawn_building(pTile, pDropID);' : null;
       if (e.effect === 'status' && e.status) {
         var dur = Number(e.duration) > 0 ? ', ' + c.num(e.duration) : '';
         w.push('d.action_landed = (WorldTile pTile, string pDropID) =>');
         w.push('{');
+        if (land) w.push(land);
         w.push('\tforeach (Actor unit in Finder.getUnitsFromChunk(pTile, 1, 3f))');
         w.push('\t{');
         w.push('\t\tunit.addStatusEffect(' + c.cs(e.status) + dur + ');');
@@ -146,11 +151,13 @@
       } else if (e.effect === 'action' && e.action && c.act(e.action)) {
         w.push('d.action_landed = (WorldTile pTile, string pDropID) =>');
         w.push('{');
+        if (land) w.push(land);
         w.push('\t' + c.act(e.action) + '(null, pTile);');
         w.push('};');
       } else if (e.effect === 'spawn' && e.unit) {
         w.push('d.action_landed = (WorldTile pTile, string pDropID) =>');
         w.push('{');
+        if (land) w.push(land);
         w.push('\tfor (int i = 0; i < ' + c.int(Math.max(1, e.count)) + '; i++)');
         w.push('\t{');
         w.push('\t\tWorld.world.units.spawnNewUnit(' + c.cs(e.unit) + ', pTile, true, true, 3f);');
