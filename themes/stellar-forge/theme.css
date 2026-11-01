@@ -1,0 +1,33 @@
+:root[data-theme="stellar-forge"] {
+  --bg-0: #0b0b0f;
+  --bg-1: #1a1828;
+  --panel: rgba(18, 18, 22, 0.94);
+  --panel-2: rgba(34, 30, 52, 0.94);
+  --line: #e5322d;
+  --line-dark: #050507;
+  --ink: #f2f2f2;
+  --ink-dim: #b4b2c4;
+  --accent: #ff4a44;
+  --accent-ink: #ffffff;
+  --accent-2: #9a8cff;
+  --danger: #ff6a64;
+  --ok: #3ccf7a;
+  --line-rgb: 229, 50, 45;
+  --accent-rgb: 255, 74, 68;
+  --shade-rgb: 11, 11, 15;
+  --card: rgba(36, 32, 58, 0.78);
+  --btn-1: #c8241f;
+  --btn-2: #a31c18;
+  --btn-h1: #e5322d;
+  --btn-h2: #c8241f;
+  --field: #09090c;
+  --field-2: #060608;
+  --ink-faint: #6a6880;
+  --acc-hi: #ff7a74;
+  --acc-lo: #e5322d;
+  --acc-hi2: #ffb0ac;
+  --acc-lo2: #f07a76;
+  --title-1: #2a1a24;
+  --title-2: #181018;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

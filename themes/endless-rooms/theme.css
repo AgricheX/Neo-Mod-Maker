@@ -1,0 +1,33 @@
+:root[data-theme="endless-rooms"] {
+  --bg-0: #181610;
+  --bg-1: #3a3520;
+  --panel: rgba(28, 26, 16, 0.93);
+  --panel-2: rgba(70, 64, 32, 0.92);
+  --line: #d9cc6a;
+  --line-dark: #0c0b06;
+  --ink: #fbf6dc;
+  --ink-dim: #d4ca96;
+  --accent: #f2e56a;
+  --accent-ink: #221e04;
+  --accent-2: #ff7a6a;
+  --danger: #ff6a6a;
+  --ok: #a8e08a;
+  --line-rgb: 217, 204, 106;
+  --accent-rgb: 242, 229, 106;
+  --shade-rgb: 12, 11, 6;
+  --card: rgba(78, 70, 34, 0.7);
+  --btn-1: #6f6630;
+  --btn-2: #544d22;
+  --btn-h1: #80763a;
+  --btn-h2: #615929;
+  --field: #100f08;
+  --field-2: #0a0905;
+  --ink-faint: #8c8458;
+  --acc-hi: #fff19a;
+  --acc-lo: #d9c840;
+  --acc-hi2: #fff8c8;
+  --acc-lo2: #ece070;
+  --title-1: #8a7f36;
+  --title-2: #665d26;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

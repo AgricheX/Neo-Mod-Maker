@@ -1,0 +1,33 @@
+:root[data-theme="nexus"] {
+  --bg-0: #0d0d0f;
+  --bg-1: #1a1a1e;
+  --panel: rgba(20, 20, 23, 0.95);
+  --panel-2: rgba(30, 30, 35, 0.96);
+  --line: #3a3a42;
+  --line-dark: #050506;
+  --ink: #f2f2f2;
+  --ink-dim: #a6a6ac;
+  --accent: #e5322d;
+  --accent-ink: #ffffff;
+  --accent-2: #ff7a74;
+  --danger: #ff6a64;
+  --ok: #3ccf7a;
+  --line-rgb: 58, 58, 66;
+  --accent-rgb: 229, 50, 45;
+  --shade-rgb: 13, 13, 15;
+  --card: rgba(26, 26, 30, 0.85);
+  --btn-1: #2a2a30;
+  --btn-2: #202025;
+  --btn-h1: #e5322d;
+  --btn-h2: #c8241f;
+  --field: #0a0a0c;
+  --field-2: #070708;
+  --ink-faint: #5e5e66;
+  --acc-hi: #f0605b;
+  --acc-lo: #c8241f;
+  --acc-hi2: #f6a5a2;
+  --acc-lo2: #ea544f;
+  --title-1: #1f1f24;
+  --title-2: #141417;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

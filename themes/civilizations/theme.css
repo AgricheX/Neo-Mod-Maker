@@ -1,0 +1,33 @@
+:root[data-theme="civilizations"] {
+  --bg-0: #14142e;
+  --bg-1: #33305e;
+  --panel: rgba(22, 22, 50, 0.92);
+  --panel-2: rgba(66, 50, 94, 0.92);
+  --line: #e8a25c;
+  --line-dark: #08081a;
+  --ink: #fff4e4;
+  --ink-dim: #d6c8e6;
+  --accent: #ffcf6a;
+  --accent-ink: #2a1600;
+  --accent-2: #8fd0ff;
+  --danger: #ff7f8a;
+  --ok: #8ee08a;
+  --line-rgb: 232, 162, 92;
+  --accent-rgb: 255, 207, 106;
+  --shade-rgb: 8, 8, 26;
+  --card: rgba(60, 50, 98, 0.72);
+  --btn-1: #3f7d3a;
+  --btn-2: #2f6430;
+  --btn-h1: #4a9044;
+  --btn-h2: #367238;
+  --field: #0b0b20;
+  --field-2: #070716;
+  --ink-faint: #8a80b0;
+  --acc-hi: #ffe09a;
+  --acc-lo: #f0b240;
+  --acc-hi2: #ffeab8;
+  --acc-lo2: #ffc85a;
+  --title-1: #3a4f8a;
+  --title-2: #283768;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

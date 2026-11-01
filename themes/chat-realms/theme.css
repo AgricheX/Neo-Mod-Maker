@@ -1,0 +1,33 @@
+:root[data-theme="chat-realms"] {
+  --bg-0: #0f1f45;
+  --bg-1: #22448a;
+  --panel: rgba(14, 30, 72, 0.93);
+  --panel-2: rgba(46, 56, 140, 0.92);
+  --line: #e8b040;
+  --line-dark: #18121e;
+  --ink: #fcf7e8;
+  --ink-dim: #c8d6f2;
+  --accent: #fac83c;
+  --accent-ink: #2a1a00;
+  --accent-2: #9aa6ff;
+  --danger: #ff7a8a;
+  --ok: #7fe0a0;
+  --line-rgb: 232, 176, 64;
+  --accent-rgb: 250, 200, 60;
+  --shade-rgb: 10, 20, 48;
+  --card: rgba(40, 70, 150, 0.7);
+  --btn-1: #5865f2;
+  --btn-2: #4752c4;
+  --btn-h1: #6a76ff;
+  --btn-h2: #5560d8;
+  --field: #0a1634;
+  --field-2: #071028;
+  --ink-faint: #7a8cc4;
+  --acc-hi: #ffe08a;
+  --acc-lo: #e8b040;
+  --acc-hi2: #fff0b8;
+  --acc-lo2: #f6c858;
+  --title-1: #5865f2;
+  --title-2: #3b44a8;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

@@ -1,0 +1,33 @@
+:root[data-theme="saga-hub"] {
+  --bg-0: #cfdee7;
+  --bg-1: #5f7c8e;
+  --panel: rgba(44, 56, 68, 0.93);
+  --panel-2: rgba(72, 90, 106, 0.93);
+  --line: #cfe2ec;
+  --line-dark: #1c252d;
+  --ink: #f4f9fc;
+  --ink-dim: #c6d6e0;
+  --accent: #eaf5fb;
+  --accent-ink: #22303a;
+  --accent-2: #a9cde0;
+  --danger: #ff9a9a;
+  --ok: #a6e6c8;
+  --line-rgb: 207, 226, 236;
+  --accent-rgb: 234, 245, 251;
+  --shade-rgb: 38, 51, 61;
+  --card: rgba(84, 104, 120, 0.72);
+  --btn-1: #5d7a8c;
+  --btn-2: #4a6475;
+  --btn-h1: #6c8a9d;
+  --btn-h2: #567285;
+  --field: #1f2a33;
+  --field-2: #182128;
+  --ink-faint: #8aa0ae;
+  --acc-hi: #ffffff;
+  --acc-lo: #c6dde9;
+  --acc-hi2: #ffffff;
+  --acc-lo2: #dbeaf2;
+  --title-1: #6f8ea2;
+  --title-2: #55707f;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

@@ -1,0 +1,33 @@
+:root[data-theme="sos2-space-expanded"] {
+  --bg-0: #0e0820;
+  --bg-1: #2a1450;
+  --panel: rgba(18, 11, 38, 0.93);
+  --panel-2: rgba(56, 30, 92, 0.92);
+  --line: #b483ff;
+  --line-dark: #06030e;
+  --ink: #f4ecff;
+  --ink-dim: #c8b6e6;
+  --accent: #e58cff;
+  --accent-ink: #22062e;
+  --accent-2: #7fd8ff;
+  --danger: #ff7a9a;
+  --ok: #86e8c0;
+  --line-rgb: 180, 131, 255;
+  --accent-rgb: 229, 140, 255;
+  --shade-rgb: 6, 3, 14;
+  --card: rgba(60, 34, 100, 0.7);
+  --btn-1: #5a3a9a;
+  --btn-2: #432a78;
+  --btn-h1: #6a46b0;
+  --btn-h2: #50328c;
+  --field: #0a0618;
+  --field-2: #060410;
+  --ink-faint: #7e6aa6;
+  --acc-hi: #f2b8ff;
+  --acc-lo: #c860e8;
+  --acc-hi2: #f8d8ff;
+  --acc-lo2: #dc88f6;
+  --title-1: #6a3fb0;
+  --title-2: #4a2a80;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}

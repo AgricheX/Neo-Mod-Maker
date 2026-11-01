@@ -1,0 +1,33 @@
+:root[data-theme="godzilla-verse"] {
+  --bg-0: #070b16;
+  --bg-1: #15263f;
+  --panel: rgba(9, 15, 28, 0.93);
+  --panel-2: rgba(22, 40, 66, 0.92);
+  --line: #4cc3ff;
+  --line-dark: #03060c;
+  --ink: #e8f6ff;
+  --ink-dim: #a8c4dc;
+  --accent: #6fe0ff;
+  --accent-ink: #021420;
+  --accent-2: #ffb347;
+  --danger: #ff6f6f;
+  --ok: #7fe8b0;
+  --line-rgb: 76, 195, 255;
+  --accent-rgb: 111, 224, 255;
+  --shade-rgb: 3, 6, 12;
+  --card: rgba(24, 44, 72, 0.72);
+  --btn-1: #1f4f7a;
+  --btn-2: #163a5c;
+  --btn-h1: #28608f;
+  --btn-h2: #1c476f;
+  --field: #050a14;
+  --field-2: #03070e;
+  --ink-faint: #5e7a96;
+  --acc-hi: #a8eeff;
+  --acc-lo: #2fb0e8;
+  --acc-hi2: #cff6ff;
+  --acc-lo2: #5fd0f6;
+  --title-1: #1b3a5c;
+  --title-2: #0f2238;
+  --title-bg: linear-gradient(180deg, var(--title-1), var(--title-2));
+}
