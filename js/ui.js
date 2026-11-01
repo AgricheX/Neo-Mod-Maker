@@ -1108,6 +1108,10 @@ MM.ui = (function () {
     help.appendChild(h('p', { text: T('Para reportar qualquer bug, tirar dúvidas ou falar com a gente, entre no nosso Discord.', 'To report any bug, ask questions or talk to us, join our Discord.') }));
     help.appendChild(h('p', {}, h('a', { href: 'https://discord.gg/s3EbgNSsJW', target: '_blank', rel: 'noopener noreferrer', text: 'discord.gg/s3EbgNSsJW' })));
     panel.appendChild(help);
+    var nexus = h('div', { class: 'credit-box credit-free' }, h('strong', { class: 'credit-name', text: 'Agriche Nexus' }));
+    nexus.appendChild(h('p', { text: T('Todos os meus mods e ferramentas em um só lugar.', 'All my mods and tools in one place.') }));
+    nexus.appendChild(h('p', {}, h('a', { href: 'https://agrichex.github.io/Nexus/', target: '_blank', rel: 'noopener noreferrer', text: 'agrichex.github.io/Nexus' })));
+    panel.appendChild(nexus);
     root.appendChild(panel);
     return root;
   };

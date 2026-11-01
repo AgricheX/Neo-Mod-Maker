@@ -54,6 +54,7 @@ MM.app = (function () {
         h('div', { class: 'sub', text: theme ? MM.L(theme.subtitle) + ' - ' + T('criador de mods para WorldBox (NML)', 'WorldBox mod creator (NML)') : '' })
       ),
       h('div', { class: 'tools' },
+        h('a', { class: 'btn tiny', href: 'https://agrichex.github.io/Nexus/', target: '_blank', rel: 'noopener noreferrer', text: 'Agriche Nexus', title: T('Todos os meus mods e ferramentas', 'All my mods and tools') }),
         soundBtn,
         undoBtn,
         redoBtn,
