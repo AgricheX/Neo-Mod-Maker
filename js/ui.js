@@ -760,6 +760,12 @@ MM.ui = (function () {
         host.appendChild(F.select(T('Reino selvagem', 'Wild kingdom'), u, 'kingdom', kopts));
         host.appendChild(F.text(T('...ou ID de reino do jogo', '...or vanilla kingdom ID'), u, 'kingdom', { placeholder: 'wolf' }));
         host.appendChild(F.select(T('Tamanho', 'Size'), u, 'size', F.opts(D.actorSizes)));
+        host.appendChild(F.select(T('Movimento', 'Movement'), u, 'move', [
+          { v: '', l: T('Padrão da base (anda em terra)', 'Template default (walks on land)') },
+          { v: 'ocean', l: T('Aquática (vive no oceano)', 'Aquatic (lives in the ocean)') },
+          { v: 'fly', l: T('Voa', 'Flies') },
+          { v: 'flyHigh', l: T('Voa alto (como dragões)', 'Flies high (like dragons)') }
+        ]));
         host.appendChild(F.color(T('Cor', 'Color'), u, 'color'));
         host.appendChild(F.image(T('Ícone', 'Icon'), u, 'img', '32x32'));
         host.appendChild(F.text(T('...ou ícone do jogo', '...or vanilla icon'), u, 'icon', { placeholder: 'iconWolf' }));

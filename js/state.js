@@ -289,7 +289,7 @@ MM.factories = {
     return {
       id: MM.store.uid('units', 'creature'), name: { en: 'Creature' }, template: '$mob_no_genes$', kingdom: '', size: 'S13_Human', color: '#7a5cff', icon: '', img: '',
       stats: { health: 100, damage: 10, speed: 30, armor: 0, attack_speed: 1, lifespan: 60 },
-      traits: '', noBaby: true, actHit: '', spells: []
+      traits: '', noBaby: true, move: '', actHit: '', spells: []
     };
   },
   disaster: function () {

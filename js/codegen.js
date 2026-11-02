@@ -317,6 +317,15 @@ MM.gen = (function () {
       else if (u.icon) out.push('\t\t\tt.icon = ' + cs(u.icon) + ';');
       if (u.kingdom) out.push('\t\t\tt.kingdom_id_wild = ' + cs(u.kingdom) + ';');
       if (u.noBaby) out.push('\t\t\tt.has_baby_form = false;');
+      if (u.move === 'ocean') {
+        out.push('\t\t\tt.force_ocean_creature = true;');
+        out.push('\t\t\tt.force_land_creature = false;');
+      }
+      if (u.move === 'fly' || u.move === 'flyHigh') {
+        out.push('\t\t\tt.flying = true;');
+        out.push('\t\t\tt.force_ocean_creature = false;');
+        if (u.move === 'flyHigh') out.push('\t\t\tt.very_high_flyer = true;');
+      }
       out.push('\t\t\tif (t.can_turn_into_zombie) t.setCanTurnIntoZombieAsset("zombie", false);');
       var nb = MM.anim.count(u, 'body');
       if (nb) {
